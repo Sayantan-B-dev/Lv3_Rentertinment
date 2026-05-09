@@ -88,7 +88,7 @@ export const authOptions: NextAuthOptions = {
         const dbUser = await User.findOne({ email: user.email });
         
         token.role = dbUser?.role || (user as any).role || "user";
-        token.id = user.id;
+        token.id = dbUser?._id.toString() || user.id;
         token.username = dbUser?.username || (user as any).username;
       }
       if (trigger === "update" && session?.name) {
