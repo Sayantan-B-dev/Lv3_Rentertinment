@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import ConfirmModal from "@/components/ui/ConfirmModal";
 
 // Custom Checkbox Component
 const Checkbox = ({ checked, onChange }: { checked: boolean, onChange: () => void }) => (
@@ -23,6 +24,17 @@ export default function AdminArtistsPage() {
   const [search, setSearch] = useState("");
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [stats, setStats] = useState({ total: 0, withImages: 0 });
+  const [modal, setModal] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+  }>({
+    isOpen: false,
+    title: "",
+    message: "",
+    onConfirm: () => {},
+  });
 
   const fetchArtists = async (query = "") => {
     setLoading(true);
@@ -66,37 +78,47 @@ export default function AdminArtistsPage() {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this artist?")) return;
-    
-    try {
-      const res = await fetch(`/api/artists/id/${id}`, { method: 'DELETE' });
-      const data = await res.json();
-      if (data.success) {
-        setArtists(prev => prev.filter(a => a._id !== id));
+  const handleDelete = (id: string) => {
+    setModal({
+      isOpen: true,
+      title: "Delete Artist",
+      message: "Are you sure you want to delete this artist? This action cannot be undone.",
+      onConfirm: async () => {
+        try {
+          const res = await fetch(`/api/artists/id/${id}`, { method: 'DELETE' });
+          const data = await res.json();
+          if (data.success) {
+            setArtists(prev => prev.filter(a => a._id !== id));
+          }
+        } catch (err) {
+          console.error("Failed to delete artist");
+        }
       }
-    } catch (err) {
-      alert("Failed to delete artist");
-    }
+    });
   };
 
-  const handleBulkDelete = async () => {
-    if (!confirm(`Are you sure you want to delete ${selectedIds.length} artists?`)) return;
-
-    try {
-      const res = await fetch(`/api/artists`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ids: selectedIds })
-      });
-      const data = await res.json();
-      if (data.success) {
-        setArtists(prev => prev.filter(a => !selectedIds.includes(a._id)));
-        setSelectedIds([]);
+  const handleBulkDelete = () => {
+    setModal({
+      isOpen: true,
+      title: "Delete Multiple Artists",
+      message: `Are you sure you want to delete ${selectedIds.length} artists? This will permanently remove them from the database.`,
+      onConfirm: async () => {
+        try {
+          const res = await fetch(`/api/artists`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ids: selectedIds })
+          });
+          const data = await res.json();
+          if (data.success) {
+            setArtists(prev => prev.filter(a => !selectedIds.includes(a._id)));
+            setSelectedIds([]);
+          }
+        } catch (err) {
+          console.error("Failed to delete artists");
+        }
       }
-    } catch (err) {
-      alert("Failed to delete artists");
-    }
+    });
   };
 
   return (
@@ -214,6 +236,14 @@ export default function AdminArtistsPage() {
           </table>
         </div>
       </div>
+
+      <ConfirmModal 
+        isOpen={modal.isOpen}
+        title={modal.title}
+        message={modal.message}
+        onConfirm={modal.onConfirm}
+        onCancel={() => setModal(prev => ({ ...prev, isOpen: false }))}
+      />
     </div>
   );
 }

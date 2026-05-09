@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import ConfirmModal from "@/components/ui/ConfirmModal";
 
 // Custom Checkbox Component
 const Checkbox = ({ checked, onChange }: { checked: boolean, onChange: () => void }) => (
@@ -21,6 +22,17 @@ export default function AdminInquiriesPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [modal, setModal] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+  }>({
+    isOpen: false,
+    title: "",
+    message: "",
+    onConfirm: () => {},
+  });
 
   const fetchInquiries = async (query = "") => {
     setLoading(true);
@@ -60,23 +72,28 @@ export default function AdminInquiriesPage() {
     }
   };
 
-  const handleBulkDelete = async () => {
-    if (!confirm(`Are you sure you want to delete ${selectedIds.length} inquiries?`)) return;
-
-    try {
-      const res = await fetch(`/api/admin/inquiries`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ids: selectedIds })
-      });
-      const data = await res.json();
-      if (data.success) {
-        setInquiries(prev => prev.filter(i => !selectedIds.includes(i._id)));
-        setSelectedIds([]);
+  const handleBulkDelete = () => {
+    setModal({
+      isOpen: true,
+      title: "Delete Inquiries",
+      message: `Are you sure you want to delete ${selectedIds.length} inquiries? This data will be permanently removed.`,
+      onConfirm: async () => {
+        try {
+          const res = await fetch(`/api/admin/inquiries`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ids: selectedIds })
+          });
+          const data = await res.json();
+          if (data.success) {
+            setInquiries(prev => prev.filter(i => !selectedIds.includes(i._id)));
+            setSelectedIds([]);
+          }
+        } catch (err) {
+          console.error("Failed to delete inquiries");
+        }
       }
-    } catch (err) {
-      alert("Failed to delete inquiries");
-    }
+    });
   };
 
   const updateStatus = async (id: string, status: string) => {
@@ -196,6 +213,14 @@ export default function AdminInquiriesPage() {
           </table>
         </div>
       </div>
+
+      <ConfirmModal 
+        isOpen={modal.isOpen}
+        title={modal.title}
+        message={modal.message}
+        onConfirm={modal.onConfirm}
+        onCancel={() => setModal(prev => ({ ...prev, isOpen: false }))}
+      />
     </div>
   );
 }
