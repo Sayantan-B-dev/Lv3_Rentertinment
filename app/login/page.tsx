@@ -4,11 +4,13 @@ import { useState, FormEvent, Suspense } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { useLoading } from "@/lib/context/LoadingContext";
 
 type View = "login" | "register" | "verify";
 
 function LoginPageContent() {
   const router = useRouter();
+  const { setIsLoading } = useLoading();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
 

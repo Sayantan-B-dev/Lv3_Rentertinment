@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useLoading } from "@/lib/context/LoadingContext";
 
 interface ArtistFormProps {
   initialData?: any;
@@ -12,6 +13,7 @@ interface ArtistFormProps {
 
 export default function ArtistForm({ initialData, mode, artistId }: ArtistFormProps) {
   const router = useRouter();
+  const { setIsLoading } = useLoading();
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
 
@@ -87,6 +89,7 @@ export default function ArtistForm({ initialData, mode, artistId }: ArtistFormPr
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setIsLoading(true);
 
     try {
       const payload = {
@@ -118,6 +121,7 @@ export default function ArtistForm({ initialData, mode, artistId }: ArtistFormPr
       toast.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
+      setIsLoading(false);
     }
   };
 

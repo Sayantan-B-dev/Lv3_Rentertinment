@@ -8,6 +8,7 @@ import ScrollReveal from "@/components/ui/ScrollReveal";
 import AuthProvider from "@/components/auth/AuthProvider";
 import { Toaster } from "sonner";
 import CustomCursor from "@/components/ui/CustomCursor";
+import { LoadingProvider } from "@/lib/context/LoadingContext";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -84,16 +85,18 @@ export default function RootLayout({
       className={`${playfair.variable} ${outfit.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <CustomCursor />
-        <Suspense fallback={null}>
-          <ScrollReveal />
-        </Suspense>
-        <AuthProvider>
-          <Navbar />
-          <main className="flex-grow">{children}</main>
-          <Footer />
-        </AuthProvider>
-        <Toaster position="top-right" richColors />
+        <LoadingProvider>
+          <CustomCursor />
+          <Suspense fallback={null}>
+            <ScrollReveal />
+          </Suspense>
+          <AuthProvider>
+            <Navbar />
+            <main className="flex-grow">{children}</main>
+            <Footer />
+          </AuthProvider>
+          <Toaster position="top-right" richColors />
+        </LoadingProvider>
       </body>
     </html>
   );

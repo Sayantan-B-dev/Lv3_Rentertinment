@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLoading } from "@/lib/context/LoadingContext";
 
 export default function CustomCursor() {
+  const { isLoading } = useLoading();
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [type, setType] = useState("default");
   const [isVisible, setIsVisible] = useState(false);
@@ -11,7 +13,6 @@ export default function CustomCursor() {
     const updatePosition = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
       if (!isVisible) {
-        console.log("CustomCursor: first move detected");
         setIsVisible(true);
       }
     };
@@ -45,16 +46,24 @@ export default function CustomCursor() {
 
   return (
     <div 
-      className={`custom-cursor-wrapper ${type}`}
+      className={`custom-cursor-wrapper ${type} ${isLoading ? 'loading' : ''}`}
       style={{ 
         left: `${position.x}px`, 
         top: `${position.y}px` 
       }}
     >
       <div className="cursor-dot"></div>
-      <div className="cursor-outline"></div>
+      <div className="cursor-outline">
+        {isLoading && (
+          <div className="cursor-loader">
+            <svg viewBox="0 0 50 50">
+              <circle cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
+            </svg>
+          </div>
+        )}
+      </div>
       
-      {type === "grab" && (
+      {type === "grab" && !isLoading && (
         <div className="cursor-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>
         </div>
