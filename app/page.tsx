@@ -7,6 +7,7 @@ import HeroSection from "@/components/home/HeroSection";
 import CategoryGrid from "@/components/home/CategoryGrid";
 import FeaturedArtists from "@/components/home/FeaturedArtists";
 import StatsBar from "@/components/home/StatsBar";
+import HomeBackground from "@/components/home/HomeBackground";
 
 // ISR caching for home page
 export const revalidate = 3600;
@@ -34,7 +35,8 @@ export default async function HomePage() {
     .filter((img: string | undefined) => !!img);
 
   return (
-    <>
+    <div className="relative overflow-hidden">
+      <HomeBackground trailImages={trailImages} />
       <HeroSection categories={categories as string[]} trailImages={trailImages} />
       <CategoryGrid counts={counts} />
       <FeaturedArtists artists={displayArtists} favorites={favorites} />
@@ -122,6 +124,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

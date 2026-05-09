@@ -1,6 +1,4 @@
 @import "tailwindcss";
-
-/* ── MODULE IMPORTS ───────────────────────────────── */
 @import "./components/base.css";
 @import "./components/animations.css";
 @import "./components/ui.css";

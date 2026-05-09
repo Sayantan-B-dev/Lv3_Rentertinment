@@ -7,100 +7,6 @@ import { useRouter } from "next/navigation";
 export default function HeroSection({ categories, trailImages }: { categories: string[], trailImages?: string[] }) {
   const router = useRouter();
 
-  useEffect(() => {
-    if (!trailImages || trailImages.length === 0) return;
-
-    let lastX = 0;
-    let lastY = 0;
-    let currentImageIndex = 0;
-    const distanceThreshold = 60;
-    const trailElements: HTMLElement[] = [];
-    const maxTrail = 5;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const hero = document.getElementById("hero");
-      if (!hero) return;
-
-      const rect = hero.getBoundingClientRect();
-      const distance = Math.hypot(e.clientX - lastX, e.clientY - lastY);
-      
-      if (distance > distanceThreshold && e.clientY >= rect.top && e.clientY <= rect.bottom) {
-        lastX = e.clientX;
-        lastY = e.clientY;
-
-        const img = document.createElement("img");
-        img.src = trailImages[currentImageIndex];
-        img.className = "mouse-trail-img";
-        
-        // Calculate position relative to the hero section
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        img.style.left = `${x - 25}px`; 
-        img.style.top = `${y - 25}px`;
-        img.style.position = "absolute";
-        
-        hero.appendChild(img);
-        trailElements.push(img);
-        
-        currentImageIndex = (currentImageIndex + 1) % trailImages.length;
-
-        // Force reflow
-        void img.offsetWidth;
-        img.classList.add("active");
-
-        // Update scales of previous elements
-        trailElements.forEach((el, index) => {
-          const pos = trailElements.length - 1 - index; // 0 is newest
-          const scale = 1 - (pos * 0.2);
-          const opacity = 1 - (pos * 0.3);
-          el.style.transform = `scale(${Math.max(0.3, scale)})`;
-          el.style.opacity = `${Math.max(0, opacity)}`;
-        });
-
-        if (trailElements.length > maxTrail) {
-          const oldest = trailElements.shift();
-          if (oldest) {
-            oldest.classList.remove("active");
-            oldest.classList.add("exit");
-            setTimeout(() => oldest.remove(), 500);
-          }
-        }
-
-        // Auto-cleanup if mouse stops
-        setTimeout(() => {
-          if (trailElements.includes(img)) {
-            const idx = trailElements.indexOf(img);
-            if (idx > -1) trailElements.splice(idx, 1);
-            img.classList.remove("active");
-            img.classList.add("exit");
-            setTimeout(() => img.remove(), 400);
-          }
-        }, 600);
-      }
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [trailImages]);
-
-  useEffect(() => {
-    const hero = document.getElementById("hero");
-    if (!hero) return;
-    const interval = setInterval(() => {
-      const p = document.createElement("div");
-      p.className = "particle";
-      const x = Math.random() * 100;
-      const dur = 4 + Math.random() * 6;
-      const delay = Math.random() * 3;
-      p.style.cssText = `left:${x}%;bottom:0;animation-duration:${dur}s;animation-delay:${delay}s;`;
-      if (Math.random() > 0.5) p.style.background = "var(--saffron)";
-      hero.appendChild(p);
-      setTimeout(() => p.remove(), (dur + delay) * 1000);
-    }, 800);
-    return () => clearInterval(interval);
-  }, []);
-
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
@@ -113,12 +19,6 @@ export default function HeroSection({ categories, trailImages }: { categories: s
 
   return (
     <section id="hero">
-      <div className="hero-bg"></div>
-      <div className="hero-grid"></div>
-      <div className="orb orb1"></div>
-      <div className="orb orb2"></div>
-      <div className="orb orb3"></div>
-
       <div className="hero-content">
         <div className="hero-badge">India's No. 1 Artist Booking Platform</div>
 
@@ -171,15 +71,6 @@ export default function HeroSection({ categories, trailImages }: { categories: s
         </svg>
         Scroll to explore
       </div>
-
-      {/* Pre-fetch images */}
-      {trailImages && (
-        <div style={{ display: 'none' }}>
-          {trailImages.map((src, i) => (
-            <img key={i} src={src} alt="" />
-          ))}
-        </div>
-      )}
     </section>
   );
 }

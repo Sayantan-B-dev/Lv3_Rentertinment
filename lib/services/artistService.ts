@@ -51,15 +51,7 @@ export async function getArtists(params: { category?: string; city?: string; pag
     query.skip(skip).limit(limit).lean(),
     Artist.countDocuments(filter)
   ]);
-  console.log(`getArtists found ${artists.length} artists of total ${total} for filter:`, JSON.stringify(filter));
-  if (artists.length > 0) {
-    console.log("DEBUG: Artist keys:", Object.keys(artists[0]));
-    console.log("DEBUG: First artist media:", JSON.stringify(artists[0].media, null, 2));
-    if (!artists[0].media || !artists[0].media.images || artists[0].media.images.length === 0) {
-       console.log("DEBUG: NO IMAGES FOUND IN media.images. Checking for images in other fields...");
-       console.log("DEBUG: Full artist object snapshot:", JSON.stringify(artists[0], (key, value) => key === 'about' ? '...' : value, 2));
-    }
-  }
+
   
   return JSON.parse(JSON.stringify({ 
     artists, 
