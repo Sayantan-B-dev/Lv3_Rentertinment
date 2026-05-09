@@ -1,5 +1,5 @@
 import { getArtists } from "@/lib/services/artistService";
-import { getDistinctCategories } from "@/lib/services/searchService";
+import { getDistinctCategories, getCategoryCounts } from "@/lib/services/searchService";
 import HeroSection from "@/components/home/HeroSection";
 import CategoryGrid from "@/components/home/CategoryGrid";
 import FeaturedArtists from "@/components/home/FeaturedArtists";
@@ -9,16 +9,24 @@ import StatsBar from "@/components/home/StatsBar";
 export const revalidate = 3600;
 
 export default async function HomePage() {
-  const [{ artists }, categories] = await Promise.all([
-    getArtists({ limit: 4, featured: true }), // Fetch top 4 or featured artists
-    getDistinctCategories()
+  const [featuredRes, categories, counts] = await Promise.all([
+    getArtists({ limit: 4, featured: true }), 
+    getDistinctCategories(),
+    getCategoryCounts()
   ]);
+
+  // Fallback if no featured artists found
+  let displayArtists = featuredRes.artists;
+  if (displayArtists.length === 0) {
+    const fallbackRes = await getArtists({ limit: 4 });
+    displayArtists = fallbackRes.artists;
+  }
 
   return (
     <>
       <HeroSection categories={categories as string[]} />
-      <CategoryGrid />
-      <FeaturedArtists artists={artists} />
+      <CategoryGrid counts={counts} />
+      <FeaturedArtists artists={displayArtists} />
 
       {/* How it Works */}
       <section id="how">

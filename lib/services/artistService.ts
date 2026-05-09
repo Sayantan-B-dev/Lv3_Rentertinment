@@ -4,9 +4,26 @@ import { slugify } from "@/lib/utils/slugify";
 
 export async function getArtists(params: { category?: string; city?: string; page?: number; limit?: number; featured?: boolean }) {
   await connectToDatabase();
+  console.log("getArtists params:", params);
   const filter: any = {};
-  if (params.category) filter["search.category_lower"] = params.category.toLowerCase();
-  if (params.city) filter["search.city_lower"] = params.city.toLowerCase();
+  if (params.category) {
+    filter.$or = [
+      { "search.category_lower": params.category.toLowerCase() },
+      { category: { $regex: new RegExp(`^${params.category}$`, "i") } }
+    ];
+  }
+  if (params.city) {
+    const cityFilter = [
+      { "search.city_lower": params.city.toLowerCase() },
+      { "location.city": { $regex: new RegExp(`^${params.city}$`, "i") } }
+    ];
+    if (filter.$or) {
+      filter.$and = [{ $or: filter.$or }, { $or: cityFilter }];
+      delete filter.$or;
+    } else {
+      filter.$or = cityFilter;
+    }
+  }
   if (params.featured !== undefined) filter.featured = params.featured;
 
   const page = Math.max(1, params.page || 1);
@@ -17,6 +34,7 @@ export async function getArtists(params: { category?: string; city?: string; pag
     Artist.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
     Artist.countDocuments(filter)
   ]);
+  console.log(`getArtists found ${artists.length} artists of total ${total} for filter:`, JSON.stringify(filter));
   return { artists, total, page, totalPages: Math.ceil(total / limit) };
 }
 

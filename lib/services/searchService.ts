@@ -21,3 +21,14 @@ export async function getDistinctCities() {
   await connectToDatabase();
   return Artist.distinct("location.city");
 }
+
+export async function getCategoryCounts() {
+  await connectToDatabase();
+  const counts = await Artist.aggregate([
+    { $group: { _id: "$category", count: { $sum: 1 } } }
+  ]);
+  return counts.reduce((acc: any, cur) => {
+    acc[cur._id] = cur.count;
+    return acc;
+  }, {});
+}

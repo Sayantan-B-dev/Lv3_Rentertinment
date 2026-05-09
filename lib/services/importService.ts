@@ -10,7 +10,11 @@ export async function importArtistsFromJSON(data: any[]) {
   for (let i = 0; i < data.length; i++) {
     const item = data[i];
     try {
-      const parsed = artistSchemaValidation.parse(item);
+      const result = artistSchemaValidation.safeParse(item);
+      if (!result.success) {
+        throw new Error(result.error.errors[0].message);
+      }
+      const parsed = result.data;
       const slug = parsed.slug || slugify(parsed.name);
       
       const existing = await Artist.findOne({ slug });
@@ -25,7 +29,7 @@ export async function importArtistsFromJSON(data: any[]) {
       }
     } catch (error: any) {
       summary.failed++;
-      summary.errors.push({ index: i, name: item.name || "Unknown", error: error.message || error });
+      summary.errors.push({ index: i, name: item.name || "Unknown", error: error.message || "Validation failed" });
     }
   }
 

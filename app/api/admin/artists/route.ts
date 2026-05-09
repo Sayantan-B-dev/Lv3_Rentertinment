@@ -20,11 +20,14 @@ export async function POST(request: Request) {
     }
 
     // Single creation
-    const parsedData = artistSchemaValidation.parse(body);
-    const artist = await createArtist(parsedData);
+    const result = artistSchemaValidation.safeParse(body);
+    if (!result.success) {
+      return apiError(result.error.errors[0].message, 400, result.error.errors);
+    }
     
+    const artist = await createArtist(result.data);
     return apiSuccess(artist, "Artist created successfully", 201);
   } catch (error: any) {
-    return apiError(error.message || "Failed to create artist", 400);
+    return apiError(error.message || "Failed to create artist", 500);
   }
 }

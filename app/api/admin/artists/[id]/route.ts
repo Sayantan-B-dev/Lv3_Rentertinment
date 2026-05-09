@@ -12,12 +12,15 @@ export async function PUT(request: any, { params }: { params: Promise<{ id: stri
     if (!session) return apiError("Unauthorized", 401);
 
     const body = await request.json();
-    const parsedData = artistSchemaValidation.parse(body);
+    const result = artistSchemaValidation.safeParse(body);
+    if (!result.success) {
+      return apiError(result.error.errors[0].message, 400, result.error.errors);
+    }
     
-    const artist = await updateArtist(id, parsedData);
+    const artist = await updateArtist(id, result.data);
     return apiSuccess(artist, "Artist updated successfully");
   } catch (error: any) {
-    return apiError(error.message || "Failed to update artist", 400);
+    return apiError(error.message || "Failed to update artist", 500);
   }
 }
 

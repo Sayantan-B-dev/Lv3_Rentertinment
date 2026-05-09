@@ -61,4 +61,10 @@ artistSchema.pre("save", function () {
   };
 });
 
-export default mongoose.models.Artist || mongoose.model("Artist", artistSchema);
+const collectionName = process.env.MONGODB_DB_COLLECTION_NAME || "artists";
+
+// In development, the model might be cached with the wrong collection name
+// if it was loaded before the environment variables were fully ready.
+const Artist = mongoose.models.Artist || mongoose.model("Artist", artistSchema, collectionName);
+
+export default Artist;

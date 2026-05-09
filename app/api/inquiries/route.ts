@@ -5,18 +5,27 @@ import { inquirySchemaValidation } from "@/lib/utils/validators";
 import { apiSuccess, apiError } from "@/lib/utils/apiResponse";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/authOptions";
+import { sendInquiryEmail } from "@/lib/utils/email";
 
 // PUBLIC: Submit a new inquiry
 export async function POST(request: Request) {
   try {
     await connectToDatabase();
     const body = await request.json();
-    const parsedData = inquirySchemaValidation.parse(body);
+    const result = inquirySchemaValidation.safeParse(body);
     
-    const inquiry = await Inquiry.create(parsedData);
+    if (!result.success) {
+      return apiError(result.error.errors[0].message, 400, result.error.errors);
+    }
+    
+    const inquiry = await Inquiry.create(result.data);
+    
+    // Send email notification (don't await to avoid delaying the response)
+    sendInquiryEmail(result.data).catch(err => console.error("Email notify fail:", err));
+
     return apiSuccess(inquiry, "Inquiry submitted successfully", 201);
   } catch (error: any) {
-    return apiError(error.message || "Failed to submit inquiry", 400);
+    return apiError(error.message || "Failed to submit inquiry", 500);
   }
 }
 
