@@ -1,21 +1,26 @@
 import { getArtists } from "@/lib/services/artistService";
 import { getUserFavorites } from "@/lib/services/userService";
+import { getDistinctCategories, getDistinctCities } from "@/lib/services/searchService";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/authOptions";
 import Link from "next/link";
 import ArtistCard from "@/components/ui/ArtistCard";
+import ArtistFilterBar from "@/components/ui/ArtistFilterBar";
 
-export default async function ArtistsPage({ searchParams }: { searchParams: Promise<{ page?: string, category?: string, city?: string }> }) {
-  const [params, session] = await Promise.all([
+export default async function ArtistsPage({ searchParams }: { searchParams: Promise<{ page?: string, category?: string, city?: string, q?: string }> }) {
+  const [params, session, categories, cities] = await Promise.all([
     searchParams,
-    getServerSession(authOptions)
+    getServerSession(authOptions),
+    getDistinctCategories(),
+    getDistinctCities()
   ]);
   
   const page = parseInt(params.page || "1", 10);
   const { artists, totalPages, total } = await getArtists({ 
     page, 
     category: params.category, 
-    city: params.city 
+    city: params.city,
+    q: params.q
   });
 
   const favorites = session?.user ? await getUserFavorites((session.user as any).id) : [];
@@ -29,6 +34,8 @@ export default async function ArtistsPage({ searchParams }: { searchParams: Prom
           <p className="section-desc">Showing {artists.length} of {total} artists</p>
         </div>
       </div>
+
+      <ArtistFilterBar categories={categories} cities={cities} />
 
       <div className="artists-grid">
         {artists.map((artist, i) => (

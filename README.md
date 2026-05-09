@@ -54,8 +54,7 @@ Important files:
 
 ## Admin Access
 
-For development and testing:
-- **Email**: `admin@rentertinment.in`
-- **Password**: `Rent@2026!Admin#`
+For development and testing, ensure `ADMIN_EMAIL` and `ADMIN_PASSWORD` are set in your `.env.local` file.
+
 
 Admin panel can be accessed at `/admin` or via the Navbar when logged in.

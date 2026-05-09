@@ -302,6 +302,9 @@
       padding: .3rem .85rem;
       background: var(--bg3); border: 1px solid var(--border);
       border-radius: 100px;
+      display: flex;
+      gap:5px;
+       flex-direction:row;
       font-size: .8rem; color: var(--text2);
       cursor: pointer; transition: all var(--tr);
       text-decoration: none;

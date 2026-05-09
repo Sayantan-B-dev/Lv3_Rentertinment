@@ -1,9 +1,25 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function StatsBar() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [stats, setStats] = useState({ totalArtists: 0, happyClients: 0, yearsExperience: 15, totalCities: 0 });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch('/api/stats');
+        const data = await res.json();
+        if (data.success) {
+          setStats(data.data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch stats", err);
+      }
+    };
+    fetchStats();
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -29,7 +45,7 @@ export default function StatsBar() {
         const timer = setInterval(() => {
           current = Math.min(current + step, target);
           if (target >= 1000) {
-            targetEl.textContent = (current >= 1000 ? (current / 1000).toFixed(target >= 10000 ? 0 : 0) + 'k+' : current.toString());
+            targetEl.textContent = (current >= 1000 ? (current / 1000).toFixed(target >= 10000 ? 0 : 0) + 'k+' : current.toString() + '+');
           } else {
             targetEl.textContent = current + '+';
           }
@@ -39,32 +55,33 @@ export default function StatsBar() {
       });
     }, { threshold: 0.5 });
 
+    // We need to re-observe if stats change
     counters?.forEach(c => counterObserver.observe(c));
 
     return () => {
       observer.disconnect();
       counterObserver.disconnect();
     };
-  }, []);
+  }, [stats]); // Re-run when stats are loaded
 
   return (
     <section id="stats" ref={containerRef}>
       <div className="section-inner">
         <div className="stats-grid reveal">
           <div className="stat-cell">
-            <div className="stat-num" data-count="20000">0</div>
+            <div className="stat-num" data-count={stats.totalArtists}>0</div>
             <div className="stat-label">Artists Listed</div>
           </div>
           <div className="stat-cell">
-            <div className="stat-num" data-count="10000">0</div>
+            <div className="stat-num" data-count={stats.happyClients}>0</div>
             <div className="stat-label">Happy Clients</div>
           </div>
           <div className="stat-cell">
-            <div className="stat-num" data-count="15">0</div>
+            <div className="stat-num" data-count={stats.yearsExperience}>0</div>
             <div className="stat-label">Years of Experience</div>
           </div>
           <div className="stat-cell">
-            <div className="stat-num" data-count="50">0</div>
+            <div className="stat-num" data-count={stats.totalCities}>0</div>
             <div className="stat-label">Cities Covered</div>
           </div>
         </div>
