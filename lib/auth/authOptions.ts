@@ -1,13 +1,21 @@
 import bcrypt from "bcryptjs";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+import { connectToDatabase } from "@/lib/db/connect";
+import User from "@/lib/models/User";
 
 export const authOptions: NextAuthOptions = {
   session: { strategy: "jwt" },
   pages: {
-    signIn: "/admin/login",
+    signIn: "/login",
+    error: "/login",
   },
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -15,41 +23,78 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const adminEmail = process.env.ADMIN_EMAIL;
-        const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
-
-        if (!adminEmail || !adminPasswordHash) {
-          throw new Error("Admin credentials are not configured.");
-        }
-
-        if (!credentials?.email || !credentials.password) {
+        if (!credentials?.email || !credentials.password) return null;
+        
+        await connectToDatabase();
+        const user = await User.findOne({ email: credentials.email.toLowerCase() });
+        
+        if (!user || !user.password) {
+          // Check if it's the hardcoded admin
+          const adminEmail = process.env.ADMIN_EMAIL;
+          const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
+          
+          if (adminEmail && adminPasswordHash && credentials.email.toLowerCase() === adminEmail.toLowerCase()) {
+            const matches = await bcrypt.compare(credentials.password, adminPasswordHash);
+            if (matches) return { id: "admin-static", email: adminEmail, name: "Admin", role: "admin" };
+          }
           return null;
         }
 
-        const emailMatches = credentials.email.toLowerCase() === adminEmail.toLowerCase();
-        const passwordMatches = await bcrypt.compare(
-          credentials.password,
-          adminPasswordHash,
-        );
-
-        if (!emailMatches || !passwordMatches) {
-          return null;
+        if (!user.isVerified) {
+          throw new Error("Email not verified");
         }
 
-        return { id: "admin", email: adminEmail, name: "Admin" };
+        const isValid = await bcrypt.compare(credentials.password, user.password);
+        if (!isValid) return null;
+
+        return { 
+          id: user._id.toString(), 
+          email: user.email, 
+          name: user.name, 
+          role: user.role,
+          username: user.username 
+        };
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async signIn({ user, account, profile }) {
+      if (account?.provider === "google") {
+        await connectToDatabase();
+        const existingUser = await User.findOne({ email: user.email });
+        if (!existingUser) {
+          // Create new user for Google login
+          await User.create({
+            name: user.name,
+            email: user.email,
+            image: user.image,
+            role: "user",
+            isVerified: true // Google accounts are verified
+          });
+        } else {
+          // Update existing user image if needed
+          existingUser.image = user.image;
+          await existingUser.save();
+        }
+      }
+      return true;
+    },
+    async jwt({ token, user, trigger, session }) {
       if (user) {
-        token.role = "admin";
+        token.role = (user as any).role || "user";
+        token.id = user.id;
+        token.username = (user as any).username;
+      }
+      if (trigger === "update" && session?.name) {
+        token.name = session.name;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.role = token.role as string | undefined;
+        (session.user as any).role = token.role;
+        (session.user as any).id = token.id;
+        (session.user as any).username = token.username;
       }
       return session;
     },

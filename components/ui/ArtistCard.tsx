@@ -2,10 +2,43 @@
 
 import Link from "next/link";
 import { formatDuration } from "@/lib/utils/formatters";
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
-export default function ArtistCard({ artist, index }: { artist: any, index?: number }) {
-  // Ensure genres is an array
+export default function ArtistCard({ artist, index, initialIsFavorite }: { artist: any, index?: number, initialIsFavorite?: boolean }) {
+  const { data: session } = useSession();
+  const router = useRouter();
+  const [isFavorite, setIsFavorite] = useState(initialIsFavorite || false);
+  const [loading, setLoading] = useState(false);
+
   const genres = Array.isArray(artist.performance?.genres) ? artist.performance.genres : [];
+
+  const toggleFavorite = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!session) {
+      router.push(`/login?callbackUrl=${window.location.pathname}`);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch("/api/users/favorites", {
+        method: "POST",
+        body: JSON.stringify({ artistId: artist._id })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setIsFavorite(!isFavorite);
+      }
+    } catch (err) {
+      console.error("Favorite toggle failed:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
   
   return (
     <Link 
@@ -23,8 +56,28 @@ export default function ArtistCard({ artist, index }: { artist: any, index?: num
           }}
         />
         <div className="artist-badge-cat">{artist.category}</div>
+        
+        <button 
+          onClick={toggleFavorite}
+          disabled={loading}
+          style={{
+            position: 'absolute', top: '12px', right: '12px', zIndex: 10,
+            width: '36px', height: '36px', borderRadius: '50%',
+            background: isFavorite ? 'var(--gold)' : 'rgba(0,0,0,0.5)',
+            border: 'none', cursor: 'pointer', display: 'grid', placeItems: 'center',
+            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            backdropFilter: 'blur(4px)',
+            color: isFavorite ? '#000' : '#fff',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+          }}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill={isFavorite ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.72-8.72 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </button>
+
         <div className="artist-overlay">
-          <button className="artist-overlay-btn">Book Now →</button>
+          <button className="artist-overlay-btn">View Details →</button>
         </div>
       </div>
       <div className="artist-info">
@@ -37,10 +90,10 @@ export default function ArtistCard({ artist, index }: { artist: any, index?: num
           </span>
         </div>
         <div className="artist-genres">
-          {genres.slice(0, 3).map((g: string) => (
+          {genres.slice(0, 2).map((g: string) => (
             <span key={g} className="genre-tag">{g}</span>
           ))}
-          {genres.length > 3 && <span className="genre-tag">+{genres.length - 3} more</span>}
+          {genres.length > 2 && <span className="genre-tag">+{genres.length - 2}</span>}
         </div>
         <div className="artist-footer">
           <span className="artist-duration">
@@ -54,3 +107,4 @@ export default function ArtistCard({ artist, index }: { artist: any, index?: num
     </Link>
   );
 }
+

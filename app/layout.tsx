@@ -3,6 +3,8 @@ import { Playfair_Display, Outfit } from "next/font/google";
 import "@/styles/globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import ScrollReveal from "@/components/ui/ScrollReveal";
+import AuthProvider from "@/components/auth/AuthProvider";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -50,9 +52,12 @@ export default function RootLayout({
       className={`${playfair.variable} ${outfit.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Navbar />
-        <main className="flex-grow">{children}</main>
-        <Footer />
+        <ScrollReveal />
+        <AuthProvider>
+          <Navbar />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

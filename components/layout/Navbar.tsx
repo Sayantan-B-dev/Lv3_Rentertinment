@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useSession, signOut } from "next-auth/react";
 
 export default function Navbar() {
   const [navOpen, setNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { data: session } = useSession();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +26,8 @@ export default function Navbar() {
     setNavOpen(false);
     document.body.style.overflow = "";
   };
+
+  const user = session?.user as any;
 
   return (
     <>
@@ -46,8 +50,19 @@ export default function Navbar() {
           </nav>
 
           <div className="hdr-actions">
-            <button className="theme-toggle" id="themeToggle" aria-label="Toggle theme"></button>
-            <Link href="/admin/login" className="btn-outline">Login</Link>
+            {user?.role === "admin" && (
+              <Link href="/admin" className="btn-outline" style={{ borderColor: 'var(--gold)', color: 'var(--gold)' }}>Admin Panel</Link>
+            )}
+            
+            {session ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <Link href="/profile" className="btn-outline">Profile</Link>
+                <button onClick={() => signOut()} className="btn-outline" style={{ color: 'var(--crimson)' }}>Logout</button>
+              </div>
+            ) : (
+              <Link href="/login" className="btn-outline">Login</Link>
+            )}
+            
             <Link href="/contact" className="btn-primary btn-sm">Book Artist ✦</Link>
             <button className="hamburger" onClick={toggleNav} aria-label="Menu">
               <span style={navOpen ? { transform: 'rotate(45deg) translate(5px, 5px)' } : {}}></span>

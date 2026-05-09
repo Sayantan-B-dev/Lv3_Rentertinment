@@ -49,3 +49,27 @@ export async function sendInquiryEmail(data: {
     return { success: false, error: err };
   }
 }
+export async function sendVerificationEmail(email: string, code: string) {
+  try {
+    const { data: resData, error } = await resend.emails.send({
+      from: "Rentertinment <onboarding@resend.dev>",
+      to: [email],
+      subject: "Verify your Rentertinment Account",
+      html: `
+        <div style="font-family: sans-serif; text-align: center; padding: 2rem; background: #0a0807; color: #fff;">
+          <h2 style="color: #d4a017;">Verify Your Account</h2>
+          <p>Thank you for joining Rentertinment. Use the code below to verify your email address. This code will expire in 10 minutes.</p>
+          <div style="font-size: 2.5rem; font-weight: bold; color: #d4a017; margin: 2rem 0; letter-spacing: 0.5rem; background: rgba(212,160,23,0.1); padding: 1rem; border-radius: 10px; border: 1px dashed #d4a017;">
+            ${code}
+          </div>
+          <p style="color: #777; font-size: 0.8rem;">If you did not request this, please ignore this email.</p>
+        </div>
+      `,
+    });
+    if (error) throw error;
+    return { success: true, data: resData };
+  } catch (err) {
+    console.error("Verification email fail:", err);
+    return { success: false, error: err };
+  }
+}
