@@ -150,6 +150,87 @@
 ### Inquiry APIs
 
 * [ ] `POST /api/inquiries`
+**Status:** `Completed`
+
+## 2.1 Create Models
+
+### Artist Model
+
+* [x] Create Artist schema
+* [x] Add indexes
+* [x] Add pre-save hook
+* [ ] Test create/update operations
+
+### Inquiry Model
+
+* [x] Create Inquiry schema
+* [x] Add status enum
+* [x] Add timestamps
+* [ ] Test inquiry creation
+
+### Admin Model (optional)
+
+* [x] Create Admin schema
+* [x] Add password hashing logic
+
+---
+
+## 2.2 Create Utility Functions
+
+* [x] Create slugify helper
+* [x] Create validators
+* [x] Create formatter helpers
+* [x] Create API response helpers
+
+---
+
+## 2.3 Create Services
+
+### Artist Service
+
+* [x] Get artists
+* [x] Get artist by slug
+* [x] Create artist
+* [x] Update artist
+* [x] Delete artist
+* [x] Pagination logic
+* [x] Category filtering
+* [x] City filtering
+
+### Search Service
+
+* [x] MongoDB text search
+* [x] Search highlighting
+* [x] Combined filtering
+
+### Import Service
+
+* [x] JSON validation
+* [x] Bulk upsert logic
+* [x] Import summary generator
+
+### ImageKit Service
+
+* [x] Upload helper
+* [x] Image URL helper
+
+---
+
+## 2.4 Create Public APIs
+
+### Artist APIs
+
+* [ ] `GET /api/artists`
+* [ ] `GET /api/artists/[slug]`
+
+### Search APIs
+
+* [ ] `GET /api/search`
+* [ ] `GET /api/filters`
+
+### Inquiry APIs
+
+* [ ] `POST /api/inquiries`
 * [ ] `GET /api/inquiries`
 * [ ] `PUT /api/inquiries/[id]`
 * [ ] `DELETE /api/inquiries/[id]`
@@ -160,13 +241,13 @@
 
 ### Artist Admin APIs
 
-* [ ] `POST /api/admin/artists`
-* [ ] `PUT /api/admin/artists/[id]`
-* [ ] `DELETE /api/admin/artists/[id]`
+* [x] `POST /api/admin/artists`
+* [x] `PUT /api/admin/artists/[id]`
+* [x] `DELETE /api/admin/artists/[id]`
 
 ### Dashboard API
 
-* [ ] `GET /api/admin/dashboard`
+* [x] `GET /api/admin/dashboard` (Implemented as Stats + Analytics)
 
 ---
 
@@ -318,11 +399,11 @@
 ### Artist Table
 
 * [x] Create ArtistTable
-* [ ] Add search
-* [ ] Add filtering
-* [ ] Add pagination
-* [ ] Add edit action
-* [ ] Add delete action
+* [x] Add search
+* [x] Add filtering
+* [x] Add pagination
+* [x] Add edit action
+* [x] Add delete action
 
 ### Artist Form
 
@@ -337,19 +418,19 @@
 ### Artist Actions
 
 * [x] Create artist
-* [ ] Edit artist
-* [ ] Delete artist
-* [ ] Upload images
+* [x] Edit artist
+* [x] Delete artist
+* [x] Upload images (integrated)
 
 ---
 
 ## 4.4 Inquiry Management
 
 * [x] Create InquiryTable
-* [ ] Show inquiry details
+* [x] Show inquiry details
 * [x] Add status dropdown
-* [ ] Add delete action
-* [ ] Add inquiry search
+* [x] Add delete action
+* [x] Add inquiry search
 
 ---
 
@@ -377,7 +458,7 @@
 
 # Phase 5 — Final Polish + Launch
 
-**Status:** `Not Started`
+**Status:** `In Progress`
 
 ## 5.1 UI Polish
 
@@ -443,7 +524,7 @@
 * [x] Inquiry submission works
 * [x] Admin can manage inquiries
 * [x] Bulk JSON import works
-* [ ] Images load correctly
+* [x] Images load correctly
 * [x] SEO metadata exists
-* [ ] Site works on mobile
+* [x] Site works on mobile
 * [ ] Production deployment stable

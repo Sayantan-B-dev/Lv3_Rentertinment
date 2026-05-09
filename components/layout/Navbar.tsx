@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
+import { siteConfig } from "@/lib/config/site";
 
 export default function Navbar() {
   const [navOpen, setNavOpen] = useState(false);
@@ -34,9 +35,9 @@ export default function Navbar() {
       <header id="site-header" style={{ boxShadow: scrolled ? '0 4px 30px rgba(0,0,0,.5)' : 'none' }}>
         <div className="hdr-inner">
           <Link href="/" className="logo" onClick={closeNav}>
-            <div className="logo-icon">T</div>
+            <div className="logo-icon">{siteConfig.name.charAt(0)}</div>
             <div className="logo-text">
-              TaranumTalent
+              {siteConfig.name}
               <span>India's Artist Platform</span>
             </div>
           </Link>

@@ -16,27 +16,29 @@ const outfit = Outfit({
   variable: "--font-outfit",
 });
 
+import { siteConfig } from "@/lib/config/site";
+
 export const metadata: Metadata = {
   title: {
-    default: "TaranumTalent | Book India's Top Artists",
-    template: "%s | TaranumTalent",
+    default: `${siteConfig.name} | Book India's Top Artists`,
+    template: `%s | ${siteConfig.name}`,
   },
-  description: "Discover and book from 20,000+ premium artists across India including Bollywood singers, comedians, DJs, and live bands for your next event.",
+  description: `Discover and book from premium artists across India including Bollywood singers, comedians, DJs, and live bands for your next event.`,
   keywords: ["artist booking", "book singers", "live bands", "bollywood artists", "event entertainment india"],
-  authors: [{ name: "TaranumTalent" }],
-  creator: "TaranumTalent",
+  authors: [{ name: siteConfig.name }],
+  creator: siteConfig.name,
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://taranumtalent.com",
-    title: "TaranumTalent | Book India's Top Artists",
-    description: "Discover and book from 20,000+ premium artists across India.",
-    siteName: "TaranumTalent",
+    url: siteConfig.url,
+    title: `${siteConfig.name} | Book India's Top Artists`,
+    description: `Discover and book from premium artists across India.`,
+    siteName: siteConfig.name,
   },
   twitter: {
     card: "summary_large_image",
-    title: "TaranumTalent | Book India's Top Artists",
-    description: "Discover and book from 20,000+ premium artists across India.",
+    title: `${siteConfig.name} | Book India's Top Artists`,
+    description: `Discover and book from premium artists across India.`,
   },
 };
 

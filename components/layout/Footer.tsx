@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { siteConfig } from "@/lib/config/site";
 
 export default function Footer() {
   return (
@@ -7,8 +8,8 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-brand">
             <Link href="/" className="logo" style={{ marginBottom: '.5rem', display: 'inline-flex' }}>
-              <div className="logo-icon">T</div>
-              <div className="logo-text">TaranumTalent <span>India's Artist Platform</span></div>
+              <div className="logo-icon">{siteConfig.name.charAt(0)}</div>
+              <div className="logo-text">{siteConfig.name} <span>India's Artist Platform</span></div>
             </Link>
             <p>India's premier platform to discover, book and manage artists — from Bollywood legends to emerging independent stars.</p>
             <div className="social-links">
@@ -65,7 +66,7 @@ export default function Footer() {
         </div>
 
         <div className="footer-bottom">
-          <p>© 2026 TaranumTalent. All rights reserved. Made with ♥ in India.</p>
+          <p>© 2026 {siteConfig.name}. All rights reserved. Made with ♥ in India.</p>
           <div className="footer-bottom-links">
             <Link href="/#">Terms</Link>
             <Link href="/#">Privacy</Link>

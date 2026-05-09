@@ -1,91 +1,54 @@
-```txt
-Rentertinment
-├── app
-│   ├── about/
-│   ├── admin/
-│   │   ├── artists/
-│   │   ├── import/
-│   │   ├── inquiries/
-│   │   ├── login/
-│   │   ├── settings/
-│   │   ├── layout.tsx
-│   │   └── page.tsx
-│   ├── api/
-│   │   ├── auth/[...nextauth]/route.ts
-│   │   └── health/db/route.ts
-│   ├── artists/
-│   │   ├── [slug]/
-│   │   └── page.tsx
-│   ├── category/[category]/
-│   ├── city/[city]/
-│   ├── contact/
-│   ├── favicon.ico
-│   ├── globals.css
-│   ├── layout.tsx
-│   ├── page.tsx
-│   └── search/
-├── components
-│   └── ui/
-│       └── button.tsx
-├── docs
-│   ├── logs
-│   │   └── 2026-05.md
-│   ├── AI_CONTEXT.md
-│   ├── ProjectDemo.html
-│   ├── ProjectLog.md
-│   ├── ProjectPlan.md
-│   ├── ProjectSRS.md
-│   └── ProjectTree.md
-├── hooks
-├── lib
-│   ├── auth/
-│   │   └── authOptions.ts
-│   ├── db/
-│   │   └── connect.ts
-│   ├── models/
-│   ├── services/
-│   └── utils.ts
-├── public
-│   ├── file.svg
-│   ├── globe.svg
-│   ├── next.svg
-│   ├── vercel.svg
-│   └── window.svg
-├── src
-│   ├── app
-│   │   ├── favicon.ico
-│   │   ├── globals.css
-│   │   ├── layout.tsx
-│   │   └── page.tsx
-│   └── legacy
-│       ├── app
-│       │   ├── favicon.ico
-│       │   ├── globals.css
-│       │   ├── layout.tsx
-│       │   └── page.tsx
-│       └── note.txt
-├── styles
-│   └── globals.css
-├── types
-│   └── next-auth.d.ts
-├── .env.example
-├── .env.local
-├── .gitignore
-├── .prettierrc
-├── AGENTS.md
-├── CLAUDE.md
-├── components.json
-├── eslint.config.mjs
-├── middleware.ts
-├── migrate_project.py
-├── next-env.d.ts
-├── next.config.ts
-├── package-lock.json
-├── package.json
-├── postcss.config.mjs
-├── ProjectTree.py
-├── README.md
-├── tailwind.config.ts
-└── tsconfig.json
+# Project Structure
 
+```text
+Rentertinment/
+├── app/
+│   ├── admin/                 # Admin Dashboard
+│   │   ├── (dashboard)/
+│   │   │   ├── artists/       # Artist Management
+│   │   │   │   └── [id]/edit/ # Artist Editor
+│   │   │   ├── inquiries/     # Inquiry Management
+│   │   │   ├── import/        # JSON Import
+│   │   │   ├── layout.tsx     # Admin Layout + Sidebar
+│   │   │   └── page.tsx       # Stats Overview
+│   │   └── login/             # Admin Login
+│   ├── api/                   # Backend APIs
+│   │   ├── admin/
+│   │   │   ├── inquiries/     # Inquiry Status Patching
+│   │   │   └── stats/         # Admin Analytics
+│   │   ├── artists/           # Public Artist APIs
+│   │   │   └── id/            # ID-based retrieval
+│   │   ├── inquiries/         # Public Inquiry POST
+│   │   ├── search/            # Keyword/Filter Search
+│   │   └── stats/             # Public Home Stats
+│   ├── artists/               # All Artists Page
+│   ├── category/              # Category Browsing
+│   ├── city/                  # City Browsing
+│   ├── profile/               # Artist Profile View
+│   ├── search/                # Search Results
+│   └── layout.tsx             # Root Layout
+├── components/
+│   ├── admin/                 # Admin UI Components
+│   │   └── AdminSidebar.tsx   # Dynamic Sidebar
+│   ├── auth/                  # Auth Providers
+│   ├── home/                  # Homepage Sections
+│   │   ├── HeroSection.tsx    # SVG icons + Search
+│   │   └── StatsBar.tsx       # Real-time Stats
+│   ├── layout/                # Global Layout
+│   │   ├── Navbar.tsx         # Glassmorphism + Branding
+│   │   └── Footer.tsx         # Site Footer
+│   └── ui/                    # Reusable UI
+│       ├── ArtistCard.tsx
+│       └── ArtistFilterBar.tsx # Directory Filters
+├── docs/                      # Documentation
+├── lib/
+│   ├── auth/                  # Auth Config
+│   ├── config/                # Site Config (site.ts)
+│   ├── db/                    # DB Connection
+│   ├── models/                # Mongoose Models
+│   ├── services/              # Business Logic
+│   └── utils/                 # Helpers
+├── public/                    # Assets
+├── scratch/                   # Utility Scripts
+└── styles/                    # CSS (globals.css)
 ```

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 export default function StatsBar() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [stats, setStats] = useState({ totalArtists: 0, happyClients: 0, yearsExperience: 15, totalCities: 0 });
+  const [stats, setStats] = useState({ totalArtists: 0, totalCities: 0 });
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -12,7 +12,10 @@ export default function StatsBar() {
         const res = await fetch('/api/stats');
         const data = await res.json();
         if (data.success) {
-          setStats(data.data);
+          setStats({
+            totalArtists: data.data.totalArtists,
+            totalCities: data.data.totalCities
+          });
         }
       } catch (err) {
         console.error("Failed to fetch stats", err);
@@ -55,30 +58,21 @@ export default function StatsBar() {
       });
     }, { threshold: 0.5 });
 
-    // We need to re-observe if stats change
     counters?.forEach(c => counterObserver.observe(c));
 
     return () => {
       observer.disconnect();
       counterObserver.disconnect();
     };
-  }, [stats]); // Re-run when stats are loaded
+  }, [stats]);
 
   return (
     <section id="stats" ref={containerRef}>
       <div className="section-inner">
-        <div className="stats-grid reveal">
+        <div className="stats-grid reveal" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
           <div className="stat-cell">
             <div className="stat-num" data-count={stats.totalArtists}>0</div>
             <div className="stat-label">Artists Listed</div>
-          </div>
-          <div className="stat-cell">
-            <div className="stat-num" data-count={stats.happyClients}>0</div>
-            <div className="stat-label">Happy Clients</div>
-          </div>
-          <div className="stat-cell">
-            <div className="stat-num" data-count={stats.yearsExperience}>0</div>
-            <div className="stat-label">Years of Experience</div>
           </div>
           <div className="stat-cell">
             <div className="stat-num" data-count={stats.totalCities}>0</div>
