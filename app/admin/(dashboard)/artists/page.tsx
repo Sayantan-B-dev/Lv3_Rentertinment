@@ -101,7 +101,7 @@ export default function AdminArtistsPage() {
 
   return (
     <div className="fade-in">
-      <div className="flex justify-between items-end mb-10 gap-8">
+      <div className="flex justify-between items-end mb-10 gap-8" >
         <div>
           <h1 className="admin-title">
             Artist <span className="text-gold">Directory</span>
@@ -120,10 +120,9 @@ export default function AdminArtistsPage() {
             + Create New Artist
           </Link>
         </div>
-      </div>
-
-      <div className="admin-table-container">
-        <form onSubmit={handleSearch} className="flex gap-4 mb-6">
+        </div>
+      <div className="admin-table-container" style={{ marginTop: "1rem" }}>
+        <form onSubmit={handleSearch} className="flex gap-4 my-6">
           <div className="flex-1 relative">
             <input 
               type="text" 
@@ -143,7 +142,7 @@ export default function AdminArtistsPage() {
           <table className="admin-table">
             <thead>
               <tr>
-                <th>
+                <th style={{ width: '48px' }}>
                   <Checkbox checked={selectedIds.length === artists.length && artists.length > 0} onChange={toggleSelectAll} />
                 </th>
                 <th>Artist</th>
@@ -160,7 +159,7 @@ export default function AdminArtistsPage() {
                 <tr><td colSpan={6} className="text-center py-16">No artists found.</td></tr>
               ) : artists.map((artist) => (
                 <tr key={artist._id}>
-                  <td>
+                  <td style={{ width: '48px' }}>
                     <Checkbox checked={selectedIds.includes(artist._id)} onChange={() => toggleSelect(artist._id)} />
                   </td>
                   <td>

@@ -80,9 +80,11 @@
 .admin-table-container {
   background: var(--surface); padding: 1.5rem; border-radius: 20px;
   border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-  margin-bottom: 2rem;
+
 }
 .admin-table { width: 100%; border-collapse: separate; border-spacing: 0 0.75rem; }
+.admin-table th:first-child,
+.admin-table td:first-child { width: 48px; min-width: 48px; max-width: 48px; }
 .admin-table th { padding: 1rem; text-align: left; color: var(--text3); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
 .admin-table td { padding: 1rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.02); }
 .admin-table td:first-child { border-left: 1px solid var(--border); border-radius: 12px 0 0 12px; }

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 
 export default function AdminImportPage() {
   const [jsonText, setJsonText] = useState("");
@@ -35,59 +34,81 @@ export default function AdminImportPage() {
   };
 
   return (
-    <div className="max-w-5xl">
-      <div className="mb-10">
-        <h1 className="admin-title">Bulk JSON <span className="text-gold">Import</span></h1>
-        <p className="admin-subtitle">Paste a JSON array of artists to bulk import or update the database.</p>
+    <div className="admin-form-main-card">
+      {/* Header */}
+      <div className="admin-form-row-section">
+        <div className="flex items-center gap-4 mb-3">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          <div>
+            <h1 className="admin-title" style={{ fontSize: '2rem', marginBottom: '0.25rem' }}>
+              Bulk JSON <span style={{ color: 'var(--gold)' }}>Import</span>
+            </h1>
+            <p className="admin-subtitle">Paste a JSON array of artists to bulk import or update the database.</p>
+          </div>
+        </div>
       </div>
-      
-      <div className="admin-section mb-10">
-        <textarea 
+
+      {/* JSON Input */}
+      <div className="admin-form-row-section">
+        <h3 className="admin-form-row-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+          </svg>
+          JSON Payload
+        </h3>
+        <textarea
           value={jsonText}
           onChange={e => setJsonText(e.target.value)}
-          rows={15}
-          className="filter-input font-mono text-sm min-h-[400px] mb-6"
-          placeholder='[ { "name": "Artist Name", "category": "Singer", "location": { "city": "Mumbai" } } ]'
+          rows={18}
+          className="admin-input-base admin-textarea"
+          style={{ fontFamily: 'monospace', fontSize: '0.85rem', minHeight: '400px' }}
+          placeholder={'[\n  {\n    "name": "Artist Name",\n    "category": "Singer",\n    "location": { "city": "Mumbai" }\n  }\n]'}
         ></textarea>
-        
-        <div className="flex justify-between items-center">
-          <p className="text-xs text-text3">Make sure the JSON follows the artist schema strictly.</p>
-          <button 
+        <div className="flex justify-between items-center mt-6">
+          <p className="admin-field-label" style={{ marginBottom: 0 }}>
+            Ensure the JSON strictly follows the artist schema.
+          </p>
+          <button
             onClick={handleImport}
             disabled={status === "loading" || !jsonText.trim()}
-            className="btn-primary px-12 py-3"
+            className="btn-primary"
+            style={{ padding: '0.9rem 3rem', borderRadius: '14px', opacity: (!jsonText.trim() ? 0.5 : 1) }}
           >
             {status === "loading" ? "Processing..." : "Start Bulk Import"}
           </button>
         </div>
       </div>
 
+      {/* Result */}
       {result && (
-        <div className={`admin-section border-2 ${status === 'success' ? 'border-gold/30' : 'border-crimson/30'}`}>
-          <h3 className={`admin-section-title ${status === 'success' ? 'text-gold' : 'text-crimson'}`}>
+        <div className="admin-form-row-section" style={{ borderBottom: 'none', paddingBottom: 0, marginBottom: 0 }}>
+          <h3 className="admin-form-row-title" style={{ color: status === 'success' ? 'var(--gold)' : 'var(--crimson)' }}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              {status === 'success'
+                ? <><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></>
+                : <><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></>
+              }
+            </svg>
             {status === "success" ? "Import Successful" : "Import Failed"}
           </h3>
           {status === "success" ? (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              <div className="bg-white/5 p-4 rounded-xl border border-white/5">
-                <div className="text-text3 text-xs mb-1">Total</div>
-                <div className="text-2xl font-bold">{result.total}</div>
-              </div>
-              <div className="bg-white/5 p-4 rounded-xl border border-white/5">
-                <div className="text-text3 text-xs mb-1 text-gold">Created</div>
-                <div className="text-2xl font-bold">{result.created}</div>
-              </div>
-              <div className="bg-white/5 p-4 rounded-xl border border-white/5">
-                <div className="text-text3 text-xs mb-1 text-green-500">Updated</div>
-                <div className="text-2xl font-bold">{result.updated}</div>
-              </div>
-              <div className="bg-white/5 p-4 rounded-xl border border-white/5">
-                <div className="text-text3 text-xs mb-1 text-crimson">Failed</div>
-                <div className="text-2xl font-bold">{result.failed}</div>
-              </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1.5rem' }}>
+              {[
+                { label: 'Total', value: result.total, color: 'var(--text)' },
+                { label: 'Created', value: result.created, color: 'var(--gold)' },
+                { label: 'Updated', value: result.updated, color: '#20bf6b' },
+                { label: 'Failed', value: result.failed, color: 'var(--crimson)' },
+              ].map(({ label, value, color }) => (
+                <div key={label} className="admin-card" style={{ gap: '0.5rem', padding: '1.5rem' }}>
+                  <div className="admin-card-label">{label}</div>
+                  <div className="admin-card-value" style={{ color }}>{value}</div>
+                </div>
+              ))}
             </div>
           ) : (
-            <div className="p-4 bg-crimson/10 rounded-xl text-crimson text-sm">
+            <div style={{ padding: '1.25rem', background: 'rgba(196,30,58,0.08)', borderRadius: '14px', border: '1px solid rgba(196,30,58,0.2)', color: 'var(--crimson)', fontSize: '0.9rem', fontFamily: 'monospace' }}>
               {result}
             </div>
           )}

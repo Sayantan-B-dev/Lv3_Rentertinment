@@ -113,7 +113,7 @@ export default function AdminInquiriesPage() {
         )}
       </div>
 
-      <div className="admin-table-container">
+      <div className="admin-table-container" style={{ marginTop: "1rem" }}>
         <form onSubmit={handleSearch} className="flex gap-4 mb-6">
           <div className="flex-1 relative">
             <input 
@@ -134,7 +134,7 @@ export default function AdminInquiriesPage() {
           <table className="admin-table">
             <thead>
               <tr>
-                <th>
+                <th style={{ width: '48px' }}>
                   <Checkbox checked={selectedIds.length === inquiries.length && inquiries.length > 0} onChange={toggleSelectAll} />
                 </th>
                 <th>Client Details</th>
@@ -151,7 +151,7 @@ export default function AdminInquiriesPage() {
                 <tr><td colSpan={6} className="text-center py-16">No inquiries found.</td></tr>
               ) : inquiries.map((iq) => (
                 <tr key={iq._id}>
-                  <td>
+                  <td style={{ width: '48px' }}>
                     <Checkbox checked={selectedIds.includes(iq._id)} onChange={() => toggleSelect(iq._id)} />
                   </td>
                   <td>
@@ -162,7 +162,7 @@ export default function AdminInquiriesPage() {
                   <td>
                     <div className="font-semibold text-gold">{iq.artistName}</div>
                     <div className="text-sm">
-                      <span className="opacity-70">📅</span> {iq.eventDate ? new Date(iq.eventDate).toLocaleDateString() : 'N/A'}
+                      <span className="opacity-70"></span> {iq.eventDate ? new Date(iq.eventDate).toLocaleDateString() : 'N/A'}
                     </div>
                     <div className="text-xs opacity-60">{iq.eventType}</div>
                   </td>

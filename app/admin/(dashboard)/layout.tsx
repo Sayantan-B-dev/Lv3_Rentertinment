@@ -12,7 +12,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg)', color: 'var(--text)' }}>
-      <div className="flex pt-[var(--hdr-h)] min-h-screen">
+      <div className="flex min-h-screen" style={{ paddingTop: 'var(--hdr-h)' }}>
         <AdminSidebar />
 
         {/* Main Content */}

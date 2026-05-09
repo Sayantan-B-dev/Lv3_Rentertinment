@@ -118,7 +118,7 @@ export default function ArtistForm({ initialData, mode, artistId }: ArtistFormPr
   };
 
   return (
-    <div className="admin-form-main-card">
+    <div className="admin-form-main-card" style={{ marginTop: '1rem' }}>
       <form onSubmit={handleSubmit} className="w-full">
         
         {/* Section 1: Basic Information */}
@@ -337,20 +337,55 @@ export default function ArtistForm({ initialData, mode, artistId }: ArtistFormPr
               <label className="admin-field-label">YouTube Video Links</label>
               <div className="admin-tag-input-wrap">
                 <input 
-                  type="text" className="admin-input-base" placeholder="Paste YouTube link here..." 
+                  type="text" className="admin-input-base" placeholder="Paste YouTube URL..." 
                   value={newVideo} onChange={e => setNewVideo(e.target.value)}
+                  onKeyDown={e => { if(e.key === 'Enter') { e.preventDefault(); if(newVideo){ setFormData({...formData, media: {...formData.media, videos: [...formData.media.videos, newVideo]}}); setNewVideo(""); } } }}
                 />
                 <button type="button" onClick={() => { if(newVideo){ setFormData({...formData, media: {...formData.media, videos: [...formData.media.videos, newVideo]}}); setNewVideo(""); } }} className="btn-primary px-6 rounded-xl">Add</button>
               </div>
-              <div className="space-y-3 mt-4">
-                {formData.media.videos.map((vid: string, i: number) => (
-                  <div key={i} className="flex items-center justify-between p-4 bg-bg border border-border rounded-2xl">
-                    <span className="text-xs truncate max-w-[85%] opacity-60 font-mono tracking-tight">{vid}</span>
-                    <button type="button" onClick={() => setFormData({...formData, media: {...formData.media, videos: formData.media.videos.filter((_, idx)=>idx!==i)}})} className="text-crimson text-sm font-black">×</button>
-                  </div>
-                ))}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1rem' }}>
+                {formData.media.videos.map((vid: string, i: number) => {
+                  const id = vid.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/)?.[1];
+                  const thumb = id ? `https://img.youtube.com/vi/${id}/mqdefault.jpg` : null;
+                  return (
+                    <div key={i} style={{
+                      display: 'flex', alignItems: 'center', gap: '1rem',
+                      background: 'var(--bg)', border: '1px solid var(--border)',
+                      borderRadius: '16px', padding: '0.75rem', overflow: 'hidden'
+                    }}>
+                      {/* Thumbnail */}
+                      <div style={{ width: '96px', height: '60px', borderRadius: '10px', overflow: 'hidden', flexShrink: 0, background: 'var(--bg3)', position: 'relative' }}>
+                        {thumb ? (
+                          <img src={thumb} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        ) : (
+                          <div style={{ width: '100%', height: '100%', display: 'grid', placeItems: 'center', opacity: 0.3 }}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="2"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                          </div>
+                        )}
+                        {/* YT badge */}
+                        <div style={{ position: 'absolute', bottom: '4px', right: '4px', background: '#ff0000', borderRadius: '4px', padding: '1px 4px', display: 'flex', alignItems: 'center' }}>
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                        </div>
+                      </div>
+                      {/* URL */}
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontSize: '0.7rem', color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.2rem' }}>YouTube</div>
+                        <div style={{ fontSize: '0.8rem', color: 'var(--text2)', fontFamily: 'monospace', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{vid}</div>
+                      </div>
+                      {/* Remove */}
+                      <button
+                        type="button"
+                        onClick={() => setFormData({...formData, media: {...formData.media, videos: formData.media.videos.filter((_: any, idx: number) => idx !== i)}})}
+                        style={{ flexShrink: 0, width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(196,30,58,0.1)', border: '1px solid rgba(196,30,58,0.2)', color: 'var(--crimson)', display: 'grid', placeItems: 'center', cursor: 'pointer' }}
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
             </div>
+
           </div>
         </div>
 
