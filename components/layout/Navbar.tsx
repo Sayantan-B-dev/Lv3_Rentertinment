@@ -55,16 +55,18 @@ export default function Navbar() {
           borderLeft: '1px solid rgba(255,255,255,0.06)',
           borderRight: '1px solid rgba(255,255,255,0.06)',
           borderBottom: scrolled
-            ? '1px solid rgba(255,255,255,0.08)'
-            : '1px solid rgba(255,255,255,0.04)',
+            ? '1px solid rgba(226, 147, 43, 0.51)'
+            : '1px solid rgba(255, 255, 255, 0.21)',
         }}
       >
         <div className="hdr-inner">
           <Link href="/" className="logo" onClick={closeNav}>
-            <div className="logo-icon">{siteConfig.name.charAt(0)}</div>
+            <div className="logo-icon">
+              <img src="/icon.png" alt="Rentertainment Logo" style={{ width: '100%', height: '100%', borderRadius: 'inherit' }} />
+            </div>
             <div className="logo-text">
               {siteConfig.name}
-              <span>India's Artist Platform</span>
+              <span>Premium Artist Booking</span>
             </div>
           </Link>
 
@@ -78,16 +80,16 @@ export default function Navbar() {
 
           <div className="hdr-actions">
             {user?.role === "admin" && (
-              <Link href="/admin" className="btn-outline" style={{ borderColor: 'var(--gold)', color: 'var(--gold)' }}>Admin Panel</Link>
+              <Link href="/admin" className="btn-outline btn-xs" style={{ borderColor: 'var(--gold)', color: 'var(--gold)' }}>Admin Panel</Link>
             )}
 
             {session ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <Link href="/profile" className="btn-outline">Profile</Link>
-                <button onClick={() => signOut()} className="btn-outline" style={{ color: 'var(--crimson)' }}>Logout</button>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <Link href="/profile" className="btn-outline btn-xs">Profile</Link>
+                <button onClick={() => signOut()} className="btn-outline btn-xs" style={{ color: 'var(--crimson)' }}>Logout</button>
               </div>
             ) : (
-              <Link href="/login" className="btn-outline">Login</Link>
+              <Link href="/login" className="btn-outline btn-xs">Login</Link>
             )}
 
             <Link href="/contact" className="btn-primary btn-sm">Book Artist ✦</Link>

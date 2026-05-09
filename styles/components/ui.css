@@ -76,6 +76,16 @@
   border-color: var(--gold);
   color: var(--gold);
 }
+.btn-sm {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.8rem;
+  border-radius: 10px;
+}
+.btn-xs {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.75rem;
+  border-radius: 8px;
+}
 .genre-tag {
   padding: 0.4rem 0.8rem;
   background: var(--bg3);

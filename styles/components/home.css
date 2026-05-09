@@ -1049,6 +1049,26 @@ section:not([data-sonner-toaster]) {
   .cat-grid {
     grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
   }
+
+  .newsletter-form {
+    flex-direction: column;
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+
+  .newsletter-form input {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 0.85rem;
+    width: 100%;
+  }
+
+  .newsletter-form button {
+    width: 100%;
+    padding: 0.85rem;
+  }
 }
 
 @media (max-width: 480px) {

@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next';
 import { getArtists } from '@/lib/services/artistService';
+import { siteConfig } from '@/lib/config/site';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://taranumtalent.com';
+  const baseUrl = siteConfig.url;
   
   // Fetch artists for dynamic routes
   const { artists } = await getArtists({ limit: 1000 });

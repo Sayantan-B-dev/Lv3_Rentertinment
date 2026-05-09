@@ -21,27 +21,51 @@ const outfit = Outfit({
 import { siteConfig } from "@/lib/config/site";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: `${siteConfig.name} | Book India's Top Artists`,
     template: `%s | ${siteConfig.name}`,
   },
-  description: `Discover and book from premium artists across India including Bollywood singers, comedians, DJs, and live bands for your next event.`,
-  keywords: ["artist booking", "book singers", "live bands", "bollywood artists", "event entertainment india"],
-  authors: [{ name: siteConfig.name }],
+  description: siteConfig.description,
+  keywords: [
+    "artist booking india",
+    "book singers for wedding",
+    "bollywood singer booking",
+    "hire djs for party",
+    "standup comedians booking",
+    "live bands for events",
+    "celebrity artist management",
+  ],
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: siteConfig.name,
   openGraph: {
     type: "website",
     locale: "en_IN",
     url: siteConfig.url,
     title: `${siteConfig.name} | Book India's Top Artists`,
-    description: `Discover and book from premium artists across India.`,
+    description: siteConfig.description,
     siteName: siteConfig.name,
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: siteConfig.name,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: `${siteConfig.name} | Book India's Top Artists`,
-    description: `Discover and book from premium artists across India.`,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
+    creator: "@rentertainment",
   },
+  icons: {
+    icon: "/icon.png",
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: `/site.webmanifest`,
 };
 
 export default function RootLayout({

@@ -30,7 +30,7 @@ html {
   --glow-saf: 0 0 30px rgba(232, 103, 26, 0.2);
   --radius: 16px;
   --radius-sm: 10px;
-  --hdr-h: 72px;
+  --hdr-h: 64px;
   --tr: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
