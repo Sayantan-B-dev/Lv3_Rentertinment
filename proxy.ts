@@ -3,7 +3,7 @@ import { getToken } from "next-auth/jwt";
 
 const PUBLIC_ADMIN_PATHS = ["/admin/login"];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (PUBLIC_ADMIN_PATHS.includes(pathname)) {

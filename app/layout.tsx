@@ -27,17 +27,9 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: [
-    "artist booking india",
-    "book singers for wedding",
-    "bollywood singer booking",
-    "hire djs for party",
-    "standup comedians booking",
-    "live bands for events",
-    "celebrity artist management",
-  ],
-  authors: [{ name: siteConfig.name, url: siteConfig.url }],
-  creator: siteConfig.name,
+  keywords: siteConfig.mainKeywords,
+  authors: [{ name: siteConfig.author, url: siteConfig.url }],
+  creator: siteConfig.author,
   openGraph: {
     type: "website",
     locale: "en_IN",
@@ -59,13 +51,24 @@ export const metadata: Metadata = {
     title: `${siteConfig.name} | Book India's Top Artists`,
     description: siteConfig.description,
     images: [siteConfig.ogImage],
-    creator: "@rentertainment",
+    creator: siteConfig.twitterHandle,
   },
   icons: {
     icon: "/icon.png",
     apple: "/apple-touch-icon.png",
   },
   manifest: `/site.webmanifest`,
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
 };
 
 export default function RootLayout({
