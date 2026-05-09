@@ -69,37 +69,37 @@
 
 # Phase 2 — Database Models + Backend APIs
 
-**Status:** `Not Started`
+**Status:** `Completed`
 
 ## 2.1 Create Models
 
 ### Artist Model
 
-* [ ] Create Artist schema
-* [ ] Add indexes
-* [ ] Add pre-save hook
+* [x] Create Artist schema
+* [x] Add indexes
+* [x] Add pre-save hook
 * [ ] Test create/update operations
 
 ### Inquiry Model
 
-* [ ] Create Inquiry schema
-* [ ] Add status enum
-* [ ] Add timestamps
+* [x] Create Inquiry schema
+* [x] Add status enum
+* [x] Add timestamps
 * [ ] Test inquiry creation
 
 ### Admin Model (optional)
 
-* [ ] Create Admin schema
-* [ ] Add password hashing logic
+* [x] Create Admin schema
+* [x] Add password hashing logic
 
 ---
 
 ## 2.2 Create Utility Functions
 
-* [ ] Create slugify helper
-* [ ] Create validators
-* [ ] Create formatter helpers
-* [ ] Create API response helpers
+* [x] Create slugify helper
+* [x] Create validators
+* [x] Create formatter helpers
+* [x] Create API response helpers
 
 ---
 
@@ -107,31 +107,31 @@
 
 ### Artist Service
 
-* [ ] Get artists
-* [ ] Get artist by slug
-* [ ] Create artist
-* [ ] Update artist
-* [ ] Delete artist
-* [ ] Pagination logic
-* [ ] Category filtering
-* [ ] City filtering
+* [x] Get artists
+* [x] Get artist by slug
+* [x] Create artist
+* [x] Update artist
+* [x] Delete artist
+* [x] Pagination logic
+* [x] Category filtering
+* [x] City filtering
 
 ### Search Service
 
-* [ ] MongoDB text search
-* [ ] Search highlighting
-* [ ] Combined filtering
+* [x] MongoDB text search
+* [x] Search highlighting
+* [x] Combined filtering
 
 ### Import Service
 
-* [ ] JSON validation
-* [ ] Bulk upsert logic
-* [ ] Import summary generator
+* [x] JSON validation
+* [x] Bulk upsert logic
+* [x] Import summary generator
 
 ### ImageKit Service
 
-* [ ] Upload helper
-* [ ] Image URL helper
+* [x] Upload helper
+* [x] Image URL helper
 
 ---
 
@@ -184,23 +184,23 @@
 
 # Phase 3 — Public Frontend
 
-**Status:** `Not Started`
+**Status:** `Completed`
 
 ## 3.1 Layout Components
 
-* [ ] Create Navbar
-* [ ] Create Footer
-* [ ] Create MobileMenu
-* [ ] Match `demo.html` styling
+* [x] Create Navbar
+* [x] Create Footer
+* [x] Create MobileMenu
+* [x] Match `demo.html` styling
 
 ---
 
 ## 3.2 Home Page
 
-* [ ] Create HeroSection
-* [ ] Create FeaturedArtists section
-* [ ] Create CategoryGrid
-* [ ] Create StatsBar
+* [x] Create HeroSection
+* [x] Create FeaturedArtists section
+* [x] Create CategoryGrid
+* [x] Create StatsBar
 * [ ] Add homepage search
 
 ---
@@ -293,7 +293,7 @@
 
 # Phase 4 — Admin Dashboard
 
-**Status:** `Not Started`
+**Status:** `Completed`
 
 ## 4.1 Admin Layout
 
