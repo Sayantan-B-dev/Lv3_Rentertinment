@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Playfair_Display, Outfit } from "next/font/google";
 import "@/styles/globals.css";
 import Navbar from "@/components/layout/Navbar";
@@ -84,7 +85,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <CustomCursor />
-        <ScrollReveal />
+        <Suspense fallback={null}>
+          <ScrollReveal />
+        </Suspense>
         <AuthProvider>
           <Navbar />
           <main className="flex-grow">{children}</main>

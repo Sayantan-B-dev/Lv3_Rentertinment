@@ -91,7 +91,7 @@ export default function ArtistForm({ initialData, mode, artistId }: ArtistFormPr
     try {
       const payload = {
         ...formData,
-        about: formData.about.split("\n").filter(p => p.trim() !== ""),
+        about: formData.about.split("\n").filter((p: string) => p.trim() !== ""),
       };
 
       const url = mode === "edit" ? `/api/artists/id/${artistId}` : "/api/artists";
@@ -318,7 +318,7 @@ export default function ArtistForm({ initialData, mode, artistId }: ArtistFormPr
                 {formData.media.images.map((img: string, i: number) => (
                   <div key={i} className="admin-upload-item">
                     <img src={img.startsWith('http') ? img : `${process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}/${img}`} alt="" />
-                    <div onClick={() => setFormData({...formData, media: {...formData.media, images: formData.media.images.filter((_, idx)=>idx!==i)}})} className="admin-upload-delete">
+                    <div onClick={() => setFormData({...formData, media: {...formData.media, images: formData.media.images.filter((_: string, idx: number)=>idx!==i)}})} className="admin-upload-delete">
                       Remove
                     </div>
                   </div>

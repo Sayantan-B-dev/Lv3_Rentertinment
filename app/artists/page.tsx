@@ -1,4 +1,6 @@
 import { getArtists } from "@/lib/services/artistService";
+export const dynamic = "force-dynamic";
+
 import { getUserFavorites } from "@/lib/services/userService";
 import { getDistinctCategories, getDistinctCities } from "@/lib/services/searchService";
 import { getServerSession } from "next-auth";
@@ -21,7 +23,7 @@ export default async function ArtistsPage({ searchParams }: { searchParams: Prom
     category: params.category, 
     city: params.city,
     q: params.q
-  });
+  }) as { artists: any[], totalPages: number, total: number };
 
   const favorites = session?.user ? await getUserFavorites((session.user as any).id) : [];
 

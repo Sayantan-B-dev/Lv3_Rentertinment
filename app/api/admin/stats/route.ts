@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/db/connect";
 import Artist from "@/lib/models/Artist";
+import Inquiry from "@/lib/models/Inquiry";
 import { apiSuccess, apiError } from "@/lib/utils/apiResponse";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/authOptions";
@@ -25,8 +26,7 @@ export async function GET() {
           }
         }
       ]),
-      // Assuming you have an Inquiry model, otherwise default to 0
-      mongoose.connection.db.collection('inquiries')?.countDocuments() || Promise.resolve(0)
+      Inquiry.countDocuments()
     ]);
 
     return apiSuccess({

@@ -6,7 +6,6 @@ import { apiSuccess, apiError } from "@/lib/utils/apiResponse";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/authOptions";
 import { sendInquiryEmail } from "@/lib/utils/email";
-
 // PUBLIC: Submit a new inquiry
 export async function POST(request: Request) {
   try {
@@ -15,7 +14,7 @@ export async function POST(request: Request) {
     const result = inquirySchemaValidation.safeParse(body);
     
     if (!result.success) {
-      return apiError(result.error.errors[0].message, 400, result.error.errors);
+      return apiError(result.error.issues[0].message, 400, result.error.issues);
     }
     
     const inquiry = await Inquiry.create(result.data);

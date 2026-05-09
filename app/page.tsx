@@ -9,8 +9,8 @@ import FeaturedArtists from "@/components/home/FeaturedArtists";
 import StatsBar from "@/components/home/StatsBar";
 import HomeBackground from "@/components/home/HomeBackground";
 
-// ISR caching for home page
-export const revalidate = 3600;
+// Force dynamic rendering
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const [featuredRes, categories, counts, session, randomArtists] = await Promise.all([
@@ -24,9 +24,9 @@ export default async function HomePage() {
   const favorites = session?.user ? await getUserFavorites((session.user as any).id) : [];
 
   // Fallback if no featured artists found
-  let displayArtists = featuredRes.artists;
+  let displayArtists = (featuredRes as any).artists;
   if (displayArtists.length === 0) {
-    const fallbackRes = await getArtists({ limit: 4 });
+    const fallbackRes = await getArtists({ limit: 4 }) as any;
     displayArtists = fallbackRes.artists;
   }
   

@@ -1,12 +1,12 @@
-const brandName = process.env.NEXT_PUBLIC_BRAND_NAME;
+const brandName = process.env.NEXT_PUBLIC_BRAND_NAME || "Rentertainment";
 
 export const siteConfig = {
   name: brandName,
   shortName: process.env.NEXT_PUBLIC_BRAND_SHORT_NAME || brandName,
   description: `Book India's Top Artists - Singers, DJs, Comedians & more for your events via ${brandName}. Premium entertainment at your fingertips.`,
   longDescription: `${brandName} is India's leading platform for booking premium entertainment. From Bollywood singers and high-energy DJs to corporate comedians and live bands, we provide high-quality artist management services for weddings, corporate events, and private parties.`,
-  url: process.env.NEXT_PUBLIC_BASE_URL,
-  ogImage: `${process.env.NEXT_PUBLIC_BASE_URL}/og.jpg`,
+  url: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
+  ogImage: `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/og.jpg`,
   author: `${brandName} Team`,
   mainKeywords: [
     "artist booking platform",

@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     // Single creation
     const result = artistSchemaValidation.safeParse(body);
     if (!result.success) {
-      return apiError(result.error.errors[0].message, 400, result.error.errors);
+      return apiError(result.error.issues[0].message, 400, result.error.issues);
     }
     
     const artist = await createArtist(result.data);

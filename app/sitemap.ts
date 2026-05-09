@@ -6,7 +6,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url;
   
   // Fetch artists for dynamic routes
-  const { artists } = await getArtists({ limit: 1000 });
+  const { artists } = await getArtists({ limit: 1000 }) as { artists: any[] };
   
   const artistUrls = artists.map((artist) => ({
     url: `${baseUrl}/artists/${artist.slug}`,

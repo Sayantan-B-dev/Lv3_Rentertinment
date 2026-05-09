@@ -1,20 +1,25 @@
 import { getArtists } from "@/lib/services/artistService";
+export const dynamic = "force-dynamic";
+
 import { getUserFavorites } from "@/lib/services/userService";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/authOptions";
 import ArtistCard from "@/components/ui/ArtistCard";
 
-export default async function CityArtistsPage({ params }: { params: Promise<{ city: string }> }) {
-  const [{ city }, session] = await Promise.all([
+export default async function CityArtistsPage({ params, searchParams }: { params: Promise<{ city: string }>, searchParams: Promise<{ q?: string, category?: string }> }) {
+  const [{ city }, sParams, session] = await Promise.all([
     params,
+    searchParams,
     getServerSession(authOptions)
   ]);
   
   const decodedCity = decodeURIComponent(city);
   const { artists, total } = await getArtists({ 
     city: decodedCity,
+    q: sParams.q,
+    category: sParams.category,
     limit: 100
-  });
+  }) as { artists: any[], total: number };
 
   const favorites = session?.user ? await getUserFavorites((session.user as any).id) : [];
 

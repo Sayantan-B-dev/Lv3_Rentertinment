@@ -12,7 +12,7 @@ export async function importArtistsFromJSON(data: any[]) {
     try {
       const result = artistSchemaValidation.safeParse(item);
       if (!result.success) {
-        throw new Error(result.error.errors[0].message);
+        throw new Error(result.error.issues[0].message);
       }
       const parsed = result.data;
       const slug = parsed.slug || slugify(parsed.name);
