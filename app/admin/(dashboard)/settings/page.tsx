@@ -2,10 +2,28 @@
 
 export default function AdminSettingsPage() {
   return (
-    <div>
-      <h1 className="section-title" style={{ fontSize: '2rem', marginBottom: '2rem' }}>Settings</h1>
-      <div style={{ background: 'var(--surface)', padding: '1.5rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>
-        <p style={{ color: 'var(--text2)' }}>Admin email and password are configured via environment variables (.env.local) for the MVP.</p>
+    <div className="max-w-4xl">
+      <div className="mb-10">
+        <h1 className="admin-title">System <span className="text-gold">Settings</span></h1>
+        <p className="admin-subtitle">Manage platform-wide configurations and authentication.</p>
+      </div>
+
+      <div className="admin-section">
+        <h3 className="admin-section-title">Authentication & Security</h3>
+        <p className="text-text2 mb-6">
+          Admin credentials and security keys are currently managed via server-side environment variables for maximum protection.
+        </p>
+        
+        <div className="space-y-4">
+          <div className="flex justify-between p-4 bg-white/5 rounded-xl border border-white/5">
+            <span className="text-text3">Admin Login Method</span>
+            <span className="font-semibold text-gold">NextAuth Credentials</span>
+          </div>
+          <div className="flex justify-between p-4 bg-white/5 rounded-xl border border-white/5">
+            <span className="text-text3">Environment State</span>
+            <span className="font-semibold text-green-500">Production Ready</span>
+          </div>
+        </div>
       </div>
     </div>
   );

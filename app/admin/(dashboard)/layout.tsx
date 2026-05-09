@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/authOptions";
 import { redirect } from "next/navigation";
-import Navbar from "@/components/layout/Navbar";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -12,14 +11,13 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   }
 
   return (
-    <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
-      <Navbar />
-      <div style={{ display: 'flex', paddingTop: 'var(--hdr-h)', minHeight: '100vh' }}>
+    <div className="min-h-screen" style={{ background: 'var(--bg)', color: 'var(--text)' }}>
+      <div className="flex pt-[var(--hdr-h)] min-h-screen">
         <AdminSidebar />
 
         {/* Main Content */}
-        <main style={{ flex: 1, padding: '2.5rem', marginLeft: '260px', minHeight: '100vh' }}>
-          <div style={{ width: '100%', margin: 0, padding: 0 }}>
+        <main className="admin-main">
+          <div className="full-width-container">
             {children}
           </div>
         </main>

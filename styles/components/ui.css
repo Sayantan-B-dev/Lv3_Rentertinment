@@ -1,0 +1,72 @@
+/* ── CORE UI COMPONENTS ──────────────────────────── */
+.section-inner {
+  max-width: 1400px; margin: 0 auto;
+  padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 4vw, 2.5rem);
+}
+.pt-nav { padding-top: calc(var(--hdr-h) + 2rem); }
+
+.section-label {
+  display: flex; align-items: center; gap: 10px;
+  color: var(--gold); font-size: .75rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .2em; margin-bottom: 1rem;
+}
+.section-label::before { content: ''; width: 30px; height: 1px; background: var(--gold); opacity: .4; }
+
+.section-title {
+  font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700; line-height: 1.1; margin-bottom: 1.5rem;
+}
+.section-title span { color: var(--gold); }
+
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 1rem 2rem; background: linear-gradient(135deg, var(--gold), var(--saffron));
+  color: #0a0807; font-size: .9rem; font-weight: 700; border: none;
+  border-radius: 12px; cursor: pointer; text-decoration: none;
+  transition: var(--tr); box-shadow: var(--glow-gold);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(212,160,23,.3); filter: brightness(1.1); }
+
+.btn-outline {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 1rem 2rem; background: transparent; color: var(--text);
+  font-size: .9rem; font-weight: 600; border: 1px solid var(--border);
+  border-radius: 12px; cursor: pointer; text-decoration: none;
+  transition: var(--tr);
+}
+.btn-outline:hover { background: rgba(255,255,255,.05); border-color: var(--gold); color: var(--gold); }
+
+.genre-tag {
+  padding: .4rem .8rem; background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 8px; font-size: .75rem; color: var(--text2);
+}
+
+.ornament {
+  text-align: center; color: var(--gold);
+  font-size: 1.2rem; opacity: .5;
+  letter-spacing: .5rem; margin: 1rem 0;
+  display: block;
+}
+
+.mob-badge {
+  display: none;
+  padding: .2rem .6rem;
+  background: linear-gradient(135deg, var(--gold), var(--saffron));
+  border-radius: 6px; color: #0a0807;
+  font-size: .65rem; font-weight: 800; letter-spacing: .05em;
+}
+@media (max-width: 768px) { .mob-badge { display: inline-block; } }
+
+#back-top {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 900;
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, var(--gold), var(--saffron));
+  border: none; border-radius: 12px;
+  color: #0a0807; font-size: 1.1rem;
+  cursor: pointer; display: grid; place-items: center;
+  opacity: 0; transform: translateY(10px);
+  transition: all var(--tr);
+  box-shadow: var(--glow-gold);
+}
+#back-top.show { opacity: 1; transform: translateY(0); }
+#back-top:hover { transform: translateY(-3px); }

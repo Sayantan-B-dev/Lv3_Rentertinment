@@ -30,32 +30,13 @@ export default function AdminSidebar() {
   ];
 
   return (
-    <aside style={{
-      width: '260px',
-      background: 'rgba(20, 20, 20, 0.5)',
-      backdropFilter: 'blur(10px)',
-      borderRight: '1px solid var(--border)',
-      padding: '2rem 1.5rem',
-      position: 'fixed',
-      top: 'var(--hdr-h)',
-      bottom: 0,
-      display: 'flex',
-      flexDirection: 'column'
-    }}>
-      <div style={{ marginBottom: '2.5rem' }}>
-        <div style={{ color: 'var(--gold)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1rem', marginBottom: '0.5rem' }}>Management</div>
-        <h2 style={{ fontSize: '1.4rem', fontWeight: 'bold' }}>Dashboard</h2>
+    <aside className="admin-sidebar">
+      <div className="admin-sidebar-header">
+        <div className="admin-sidebar-badge">Management</div>
+        <h2 className="admin-sidebar-title">Dashboard</h2>
       </div>
 
-      <nav
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "0.5rem",
-          alignItems: "flex-start",
-          textAlign: "left",
-        }}
-      >
+      <nav className="admin-nav">
         {navItems.map((item) => {
           const isActive = pathname === item.href || (item.href !== "/admin" && pathname.startsWith(item.href));
 
@@ -63,19 +44,7 @@ export default function AdminSidebar() {
             <Link
               key={item.href}
               href={item.href}
-              style={{
-                padding: '0.8rem 1.2rem',
-                borderRadius: '12px',
-                textDecoration: 'none',
-                transition: '0.2s',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.75rem',
-                background: isActive ? 'rgba(212, 160, 23, 0.15)' : 'transparent',
-                color: isActive ? 'var(--gold)' : 'var(--text2)',
-                fontWeight: isActive ? 600 : 400,
-                border: isActive ? '1px solid rgba(212, 160, 23, 0.2)' : '1px solid transparent'
-              }}
+              className={`admin-nav-item ${isActive ? 'active' : ''}`}
             >
               {item.icon}
               {item.label}
@@ -84,8 +53,8 @@ export default function AdminSidebar() {
         })}
       </nav>
 
-      <div style={{ marginTop: 'auto', borderTop: '1px solid var(--border)', paddingTop: '1.5rem' }}>
-        <Link href="/" style={{ display: 'block', padding: '0.8rem 1.2rem', borderRadius: '12px', color: 'var(--text2)', textDecoration: 'none', fontSize: '0.9rem' }}>
+      <div className="admin-sidebar-footer">
+        <Link href="/" className="admin-nav-item">
           ← Back to Site
         </Link>
       </div>

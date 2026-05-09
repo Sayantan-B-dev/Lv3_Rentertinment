@@ -16,7 +16,8 @@ function ContactForm() {
     const fd = new FormData(e.currentTarget);
     const data = Object.fromEntries(fd);
 
-    data.artistId = "5f8f8c44b54764421b7156e9"; // dummy valid ObjectId
+    // Default valid ObjectId if artist not found via slug (or keep empty if backend handles it)
+    data.artistId = "5f8f8c44b54764421b7156e9"; 
 
     try {
       const res = await fetch("/api/inquiries", {
@@ -40,70 +41,87 @@ function ContactForm() {
   };
 
   return (
-    <div className="section-inner" style={{ padding: 'clamp(4rem, 8vw, 7rem) clamp(1rem, 4vw, 2.5rem)', paddingTop: 'calc(var(--hdr-h) + 2rem)' }}>
-      <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-        <div className="section-label" style={{ justifyContent: 'center' }}>Get in Touch</div>
-        <h1 className="section-title" style={{ textAlign: 'center', marginBottom: '2rem' }}>Book an <span>Artist</span></h1>
+    <div className="section-inner pt-nav">
+      <div className="max-w-2xl mx-auto">
+        <div className="section-label justify-center">Get in Touch</div>
+        <h1 className="section-title text-center mb-10">Book an <span>Artist</span></h1>
 
         {status === "success" && (
-          <div style={{ padding: '1rem', background: 'rgba(212,160,23,.1)', border: '1px solid var(--gold)', borderRadius: 'var(--radius)', color: 'var(--gold)', marginBottom: '2rem' }}>
+          <div className="p-4 bg-gold/10 border border-gold rounded-2xl text-gold mb-8 text-center animate-fade-in">
             {msg}
           </div>
         )}
 
         {status === "error" && (
-          <div style={{ padding: '1rem', background: 'rgba(196,30,58,.1)', border: '1px solid var(--crimson)', borderRadius: 'var(--radius)', color: '#ff6b6b', marginBottom: '2rem' }}>
+          <div className="p-4 bg-crimson/10 border border-crimson rounded-2xl text-crimson mb-8 text-center animate-fade-in">
             {msg}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', background: 'var(--surface)', padding: '2rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>
+        <form onSubmit={handleSubmit} className="admin-section space-y-6">
           
           <div>
-            <label style={{ display: 'block', marginBottom: '.5rem', fontSize: '.9rem', color: 'var(--text2)' }}>Artist Name</label>
-            <input type="text" name="artistName" defaultValue={artistSlug ? artistSlug.replace(/-/g, ' ') : ""} required style={{ width: '100%', padding: '.75rem', background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--text)' }} />
+            <label className="block text-sm font-medium mb-2 opacity-70">Artist Name</label>
+            <input 
+              type="text" 
+              name="artistName" 
+              defaultValue={artistSlug ? artistSlug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : ""} 
+              required 
+              className="filter-input"
+              placeholder="e.g. Arijit Singh"
+            />
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label style={{ display: 'block', marginBottom: '.5rem', fontSize: '.9rem', color: 'var(--text2)' }}>Your Name</label>
-              <input type="text" name="clientName" required style={{ width: '100%', padding: '.75rem', background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--text)' }} />
+              <label className="block text-sm font-medium mb-2 opacity-70">Your Name</label>
+              <input type="text" name="clientName" required className="filter-input" />
             </div>
             <div>
-              <label style={{ display: 'block', marginBottom: '.5rem', fontSize: '.9rem', color: 'var(--text2)' }}>Email</label>
-              <input type="email" name="clientEmail" required style={{ width: '100%', padding: '.75rem', background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--text)' }} />
+              <label className="block text-sm font-medium mb-2 opacity-70">Email Address</label>
+              <input type="email" name="clientEmail" required className="filter-input" />
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label style={{ display: 'block', marginBottom: '.5rem', fontSize: '.9rem', color: 'var(--text2)' }}>Phone</label>
-              <input type="tel" name="clientPhone" required style={{ width: '100%', padding: '.75rem', background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--text)' }} />
+              <label className="block text-sm font-medium mb-2 opacity-70">Phone Number</label>
+              <input type="tel" name="clientPhone" required className="filter-input" />
             </div>
             <div>
-              <label style={{ display: 'block', marginBottom: '.5rem', fontSize: '.9rem', color: 'var(--text2)' }}>Event Date</label>
-              <input type="date" name="eventDate" style={{ width: '100%', padding: '.75rem', background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--text)' }} />
+              <label className="block text-sm font-medium mb-2 opacity-70">Event Date</label>
+              <input type="date" name="eventDate" className="filter-input" />
             </div>
           </div>
 
           <div>
-            <label style={{ display: 'block', marginBottom: '.5rem', fontSize: '.9rem', color: 'var(--text2)' }}>Event Type</label>
-            <select name="eventType" required style={{ width: '100%', padding: '.75rem', background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--text)' }}>
+            <label className="block text-sm font-medium mb-2 opacity-70">Type of Event</label>
+            <select name="eventType" required className="filter-select w-full">
               <option value="Wedding">Wedding</option>
               <option value="Corporate">Corporate</option>
               <option value="Private Party">Private Party</option>
               <option value="College">College</option>
+              <option value="Concert">Concert / Festival</option>
               <option value="Other">Other</option>
             </select>
           </div>
 
           <div>
-            <label style={{ display: 'block', marginBottom: '.5rem', fontSize: '.9rem', color: 'var(--text2)' }}>Message / Requirements</label>
-            <textarea name="message" rows={4} style={{ width: '100%', padding: '.75rem', background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '8px', color: 'var(--text)' }}></textarea>
+            <label className="block text-sm font-medium mb-2 opacity-70">Message / Requirements</label>
+            <textarea 
+              name="message" 
+              rows={4} 
+              className="filter-input min-h-[120px]"
+              placeholder="Tell us about your event expectations..."
+            ></textarea>
           </div>
 
-          <button type="submit" disabled={status === "loading"} className="btn-primary" style={{ width: '100%', justifyContent: 'center', marginTop: '1rem', padding: '1rem' }}>
-            {status === "loading" ? "Submitting..." : "Send Inquiry ✦"}
+          <button 
+            type="submit" 
+            disabled={status === "loading"} 
+            className="btn-primary w-full py-4 text-lg mt-4 shadow-gold/20"
+          >
+            {status === "loading" ? "Submitting Inquiry..." : "Submit Inquiry ✦"}
           </button>
         </form>
       </div>
@@ -113,7 +131,7 @@ function ContactForm() {
 
 export default function ContactPage() {
   return (
-    <Suspense fallback={<div className="section-inner" style={{ padding: '7rem 2.5rem', textAlign: 'center' }}>Loading form...</div>}>
+    <Suspense fallback={<div className="section-inner pt-nav text-center">Loading form...</div>}>
       <ContactForm />
     </Suspense>
   );

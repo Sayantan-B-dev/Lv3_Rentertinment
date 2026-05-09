@@ -29,7 +29,6 @@ export default function ArtistFilterBar({
     if (finalCat) params.set("category", finalCat);
     if (finalCity) params.set("city", finalCity);
     
-    // If we are on a category page and category changed, redirect to new category page
     if (basePath.startsWith('/category/') && finalCat) {
       router.push(`/category/${encodeURIComponent(finalCat)}?${params.toString()}`);
     } else {
@@ -48,32 +47,15 @@ export default function ArtistFilterBar({
   };
 
   return (
-    <div style={{ 
-      display: 'flex', 
-      gap: '1rem', 
-      marginBottom: '3rem', 
-      flexWrap: 'wrap',
-      background: 'rgba(255,255,255,0.02)',
-      padding: '1.5rem',
-      borderRadius: '20px',
-      border: '1px solid var(--border)'
-    }}>
-      <div style={{ flex: 2, minWidth: '250px', position: 'relative' }}>
+    <div className="filter-bar">
+      <div className="filter-input-wrap">
         <input 
           type="text" 
           placeholder="Search by name or keyword..." 
           value={q}
           onChange={(e) => setQ(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleFilter()}
-          style={{ 
-            width: '100%', 
-            padding: '0.8rem 1.2rem', 
-            paddingLeft: '2.8rem',
-            borderRadius: '12px', 
-            background: 'var(--bg)', 
-            border: '1px solid var(--border)',
-            color: 'var(--text)'
-          }}
+          className="filter-input"
         />
         <svg style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', opacity: 0.5 }} width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </div>
@@ -81,7 +63,7 @@ export default function ArtistFilterBar({
       <select 
         value={category} 
         onChange={(e) => onCategoryChange(e.target.value)}
-        style={{ flex: 1, minWidth: '150px', padding: '0.8rem 1.2rem', borderRadius: '12px', background: 'var(--bg)', border: '1px solid var(--border)', color: 'var(--text)' }}
+        className="filter-select"
       >
         <option value="">All Categories</option>
         {categories.map(c => <option key={c} value={c}>{c}</option>)}
@@ -90,7 +72,7 @@ export default function ArtistFilterBar({
       <select 
         value={city} 
         onChange={(e) => onCityChange(e.target.value)}
-        style={{ flex: 1, minWidth: '150px', padding: '0.8rem 1.2rem', borderRadius: '12px', background: 'var(--bg)', border: '1px solid var(--border)', color: 'var(--text)' }}
+        className="filter-select"
       >
         <option value="">All Cities</option>
         {cities.map(c => <option key={c} value={c}>{c}</option>)}

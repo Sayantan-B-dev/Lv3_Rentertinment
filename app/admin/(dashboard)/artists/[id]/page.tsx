@@ -1,3 +1,6 @@
-export default function EditAdminArtistPage() {
-  return <main className="p-6">Edit artist form (Phase 4)</main>;
+import { redirect } from "next/navigation";
+
+export default function ArtistViewRedirect({ params }: { params: any }) {
+  const id = params.id;
+  redirect(`/admin/artists/${id}/edit`);
 }

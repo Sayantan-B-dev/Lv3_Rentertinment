@@ -27,88 +27,71 @@ export default function AdminDashboard() {
 
   return (
     <div>
-      <div style={{ marginBottom: '3rem' }}>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '0.5rem' }}>
-          Platform <span style={{ color: 'var(--gold)' }}>Overview</span>
+      <div className="admin-header">
+        <h1 className="admin-title">
+          Platform <span className="text-gold">Overview</span>
         </h1>
-        <p style={{ color: 'var(--text2)' }}>Real-time statistics from your TaranumTalent database.</p>
+        <p className="admin-subtitle">Real-time statistics from your database.</p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem', marginBottom: '3rem' }}>
+      <div className="admin-stats-grid">
         {statCards.map((card, idx) => (
-          <div key={idx} style={{ 
-            background: 'var(--surface)', 
-            padding: '2rem', 
-            borderRadius: '24px', 
-            border: '1px solid var(--border)',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1rem',
-            position: 'relative',
-            overflow: 'hidden'
-          }}>
-            <div style={{ fontSize: '2rem' }}>{card.icon}</div>
+          <div key={idx} className="admin-card">
+            <div className="admin-card-icon">{card.icon}</div>
             <div>
-              <div style={{ color: 'var(--text3)', fontSize: '0.9rem', marginBottom: '0.25rem' }}>{card.title}</div>
-              <div style={{ fontSize: '2.5rem', fontWeight: '800' }}>
+              <div className="admin-card-label">{card.title}</div>
+              <div className="admin-card-value">
                 {loading ? "..." : card.value.toLocaleString()}
               </div>
             </div>
-            <div style={{ 
-              position: 'absolute', 
-              right: '-10px', 
-              bottom: '-10px', 
-              fontSize: '5rem', 
-              opacity: 0.05,
-              color: card.color
-            }}>{card.icon}</div>
+            <div className="admin-card-bg-icon" style={{ color: card.color }}>{card.icon}</div>
           </div>
         ))}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '2rem' }}>
+      <div className="admin-grid-layout">
         {/* Quick Actions */}
-        <div style={{ background: 'var(--surface)', padding: '2rem', borderRadius: '24px', border: '1px solid var(--border)' }}>
-          <h3 style={{ fontSize: '1.2rem', marginBottom: '1.5rem' }}>Quick Management</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-            <Link href="/admin/artists/new" style={{ padding: '1.5rem', borderRadius: '16px', background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border)', textDecoration: 'none', color: 'var(--text)' }}>
-              <div style={{ marginBottom: '1rem', color: 'var(--gold)' }}>
+        <div className="admin-section">
+          <h3 className="admin-section-title">Quick Management</h3>
+          <div className="admin-action-grid">
+            <Link href="/admin/artists/new" className="admin-action-card">
+              <div className="admin-action-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               </div>
-              <div style={{ fontWeight: '700' }}>Add New Artist</div>
-              <div style={{ fontSize: '0.8rem', color: 'var(--text3)' }}>Manual creation with full media support</div>
+              <div className="admin-action-label">Add New Artist</div>
+              <div className="admin-action-desc">Manual creation with full media support</div>
             </Link>
-            <Link href="/admin/import" style={{ padding: '1.5rem', borderRadius: '16px', background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border)', textDecoration: 'none', color: 'var(--text)' }}>
-              <div style={{ marginBottom: '1rem', color: 'var(--gold)' }}>
+            <Link href="/admin/import" className="admin-action-card">
+              <div className="admin-action-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               </div>
-              <div style={{ fontWeight: '700' }}>Bulk JSON Import</div>
-              <div style={{ fontSize: '0.8rem', color: 'var(--text3)' }}>Import thousands of artists at once</div>
+              <div className="admin-action-label">Bulk JSON Import</div>
+              <div className="admin-action-desc">Import thousands of artists at once</div>
             </Link>
           </div>
         </div>
 
         {/* System Health */}
-        <div style={{ background: 'var(--surface)', padding: '2rem', borderRadius: '24px', border: '1px solid var(--border)' }}>
-          <h3 style={{ fontSize: '1.2rem', marginBottom: '1.5rem' }}>System Status</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ color: 'var(--text2)' }}>Database</span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#20bf6b', fontWeight: '700' }}>
+        <div className="admin-section">
+          <h3 className="admin-section-title">System Status</h3>
+          <div className="admin-status-list">
+            <div className="admin-status-item">
+              <span className="admin-status-label">Database</span>
+              <div className="admin-status-value status-healthy">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
                 Connected
               </div>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ color: 'var(--text2)' }}>Auth Service</span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#20bf6b', fontWeight: '700' }}>
+            <div className="admin-status-item">
+              <span className="admin-status-label">Auth Service</span>
+              <div className="admin-status-value status-healthy">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
                 Healthy
               </div>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ color: 'var(--text2)' }}>Media Storage</span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#20bf6b', fontWeight: '700' }}>
+            <div className="admin-status-item">
+              <span className="admin-status-label">Media Storage</span>
+              <div className="admin-status-value status-healthy">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
                 Operational
               </div>

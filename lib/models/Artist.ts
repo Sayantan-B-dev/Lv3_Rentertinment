@@ -38,15 +38,18 @@ const artistSchema = new mongoose.Schema({
   slug: { type: String, required: true, unique: true, trim: true, index: true },
   name: { type: String, required: true, trim: true, index: true },
   category: { type: String, required: true, trim: true, index: true },
+  category_tag: String,
   source: sourceSchema,
   location: locationSchema,
   performance: performanceSchema,
   booking: bookingSchema,
-  about: String,
+  booking_link: String,
+  about: mongoose.Schema.Types.Mixed, // Can be string or array of strings
+  custom_fields: mongoose.Schema.Types.Mixed,
   faq: [faqSchema],
   media: mediaSchema,
   search: searchSchema,
-  featured: { type: Boolean, default: false } // Added featured flag for home page carousel as per SRS
+  featured: { type: Boolean, default: false }
 }, { timestamps: true, versionKey: false });
 
 artistSchema.index({ name: "text", about: "text", category: "text" });

@@ -69,7 +69,7 @@ export default function StatsBar() {
   return (
     <section id="stats" ref={containerRef}>
       <div className="section-inner">
-        <div className="stats-grid reveal" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
+        <div className="stats-grid reveal stats-grid-2">
           <div className="stat-cell">
             <div className="stat-num" data-count={stats.totalArtists}>0</div>
             <div className="stat-label">Artists Listed</div>
