@@ -18,11 +18,26 @@ export default async function ArtistProfilePage({ params }: { params: Promise<{ 
         {/* Left Col: Images */}
         <div>
           <div style={{ borderRadius: 'var(--radius)', overflow: 'hidden', aspectRatio: '4/3', marginBottom: '1rem' }}>
-            <img src={artist.media?.images?.[0] || "/images/placeholder.jpg"} alt={artist.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <img 
+              src={
+                artist.media?.images?.[0] 
+                  ? (artist.media.images[0].startsWith('http') 
+                      ? artist.media.images[0] 
+                      : `${process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}/${artist.media.images[0].startsWith('/') ? artist.media.images[0].slice(1) : artist.media.images[0]}`)
+                  : "https://placehold.co/600x400/1a1a1a/d4a017?text=No+Image"
+              } 
+              alt={artist.name} 
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+            />
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
             {artist.media?.images?.slice(1, 3).map((img: string, i: number) => (
-              <img key={i} src={img} style={{ width: '100%', borderRadius: 'var(--radius)', aspectRatio: '1', objectFit: 'cover' }} alt={`${artist.name} gallery ${i+1}`} />
+              <img 
+                key={i} 
+                src={img.startsWith('http') ? img : `${process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}/${img.startsWith('/') ? img.slice(1) : img}`} 
+                style={{ width: '100%', borderRadius: 'var(--radius)', aspectRatio: '1', objectFit: 'cover' }} 
+                alt={`${artist.name} gallery ${i+1}`} 
+              />
             ))}
           </div>
         </div>

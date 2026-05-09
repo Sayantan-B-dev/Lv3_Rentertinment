@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { formatDuration } from "@/lib/utils/formatters";
 import ArtistCard from "@/components/ui/ArtistCard";
 
-export default function FeaturedArtists({ artists }: { artists: any[] }) {
+export default function FeaturedArtists({ artists, favorites = [] }: { artists: any[], favorites?: string[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -38,7 +38,12 @@ export default function FeaturedArtists({ artists }: { artists: any[] }) {
 
         <div className="artists-grid">
           {artists.map((artist, index) => (
-            <ArtistCard key={artist.slug} artist={artist} index={index} />
+            <ArtistCard 
+              key={artist.slug} 
+              artist={artist} 
+              index={index} 
+              initialIsFavorite={favorites.includes(artist._id.toString())}
+            />
           ))}
         </div>
       </div>

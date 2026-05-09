@@ -25,20 +25,23 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) return null;
         
+        const adminEmail = process.env.ADMIN_EMAIL?.trim();
+        const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH?.trim();
+        
+        // 1. Check if it's the predefined admin from env
+        if (adminEmail && adminPasswordHash && credentials.email.toLowerCase() === adminEmail.toLowerCase()) {
+          const matches = await bcrypt.compare(credentials.password, adminPasswordHash);
+          if (matches) {
+            console.log("Predefined Admin logged in:", adminEmail);
+            return { id: "admin-static", email: adminEmail, name: "Admin", role: "admin" };
+          }
+        }
+
+        // 2. Check database for regular users
         await connectToDatabase();
         const user = await User.findOne({ email: credentials.email.toLowerCase() });
         
-        if (!user || !user.password) {
-          // Check if it's the hardcoded admin
-          const adminEmail = process.env.ADMIN_EMAIL;
-          const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
-          
-          if (adminEmail && adminPasswordHash && credentials.email.toLowerCase() === adminEmail.toLowerCase()) {
-            const matches = await bcrypt.compare(credentials.password, adminPasswordHash);
-            if (matches) return { id: "admin-static", email: adminEmail, name: "Admin", role: "admin" };
-          }
-          return null;
-        }
+        if (!user || !user.password) return null;
 
         if (!user.isVerified) {
           throw new Error("Email not verified");
@@ -79,11 +82,14 @@ export const authOptions: NextAuthOptions = {
       }
       return true;
     },
-    async jwt({ token, user, trigger, session }) {
+    async jwt({ token, user, account, trigger, session }) {
       if (user) {
-        token.role = (user as any).role || "user";
+        await connectToDatabase();
+        const dbUser = await User.findOne({ email: user.email });
+        
+        token.role = dbUser?.role || (user as any).role || "user";
         token.id = user.id;
-        token.username = (user as any).username;
+        token.username = dbUser?.username || (user as any).username;
       }
       if (trigger === "update" && session?.name) {
         token.name = session.name;

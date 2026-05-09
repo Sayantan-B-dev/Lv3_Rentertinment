@@ -44,15 +44,24 @@ export default function ArtistCard({ artist, index, initialIsFavorite }: { artis
     <Link 
       className="artist-card reveal" 
       href={`/artists/${artist.slug}`} 
-      style={index !== undefined ? { transitionDelay: `${index * 0.07}s` } : {}}
+      style={index !== undefined ? { transitionDelay: `${Math.min(index, 8) * 0.07}s` } : {}}
     >
       <div className="artist-img-wrap">
         <img 
-          src={artist.media?.images?.[0] || "/images/placeholder.jpg"} 
+          src={
+            artist.media?.images?.[0] 
+              ? (artist.media.images[0].startsWith('http') 
+                  ? artist.media.images[0] 
+                  : `${process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}/${artist.media.images[0].startsWith('/') ? artist.media.images[0].slice(1) : artist.media.images[0]}`)
+              : "https://placehold.co/600x400/1a1a1a/d4a017?text=No+Image"
+          } 
           alt={artist.name} 
           loading="lazy" 
           onError={(e) => {
-            (e.target as HTMLImageElement).src = "/images/placeholder.jpg";
+            const target = e.target as HTMLImageElement;
+            if (!target.src.includes("placehold.co")) {
+              target.src = "https://placehold.co/600x400/1a1a1a/d4a017?text=Artist";
+            }
           }}
         />
         <div className="artist-badge-cat">{artist.category}</div>

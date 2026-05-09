@@ -1,5 +1,8 @@
 import { getArtists } from "@/lib/services/artistService";
 import { getDistinctCategories, getCategoryCounts } from "@/lib/services/searchService";
+import { getUserFavorites } from "@/lib/services/userService";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth/authOptions";
 import HeroSection from "@/components/home/HeroSection";
 import CategoryGrid from "@/components/home/CategoryGrid";
 import FeaturedArtists from "@/components/home/FeaturedArtists";
@@ -9,11 +12,14 @@ import StatsBar from "@/components/home/StatsBar";
 export const revalidate = 3600;
 
 export default async function HomePage() {
-  const [featuredRes, categories, counts] = await Promise.all([
+  const [featuredRes, categories, counts, session] = await Promise.all([
     getArtists({ limit: 4, featured: true }), 
     getDistinctCategories(),
-    getCategoryCounts()
+    getCategoryCounts(),
+    getServerSession(authOptions)
   ]);
+  
+  const favorites = session?.user ? await getUserFavorites((session.user as any).id) : [];
 
   // Fallback if no featured artists found
   let displayArtists = featuredRes.artists;
@@ -26,7 +32,7 @@ export default async function HomePage() {
     <>
       <HeroSection categories={categories as string[]} />
       <CategoryGrid counts={counts} />
-      <FeaturedArtists artists={displayArtists} />
+      <FeaturedArtists artists={displayArtists} favorites={favorites} />
 
       {/* How it Works */}
       <section id="how">

@@ -1,19 +1,23 @@
 import { getArtists } from "@/lib/services/artistService";
+import { getUserFavorites } from "@/lib/services/userService";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth/authOptions";
 import ArtistCard from "@/components/ui/ArtistCard";
 import { notFound } from "next/navigation";
 
 export default async function CategoryArtistsPage({ params }: { params: Promise<{ category: string }> }) {
-  const { category } = await params;
-  const decodedCategory = decodeURIComponent(category);
+  const [{ category }, session] = await Promise.all([
+    params,
+    getServerSession(authOptions)
+  ]);
   
+  const decodedCategory = decodeURIComponent(category);
   const { artists, total } = await getArtists({ 
     category: decodedCategory,
     limit: 100
   });
 
-  if (artists.length === 0) {
-    // We could either show 404 or just an empty state. Let's show the page with empty state.
-  }
+  const favorites = session?.user ? await getUserFavorites((session.user as any).id) : [];
 
   return (
     <div className="section-inner" style={{ padding: 'clamp(4rem, 8vw, 7rem) clamp(1rem, 4vw, 2.5rem)', paddingTop: 'calc(var(--hdr-h) + 2rem)' }}>
@@ -27,7 +31,12 @@ export default async function CategoryArtistsPage({ params }: { params: Promise<
 
       <div className="artists-grid">
         {artists.map((artist, i) => (
-          <ArtistCard key={artist.slug} artist={artist} index={i} />
+          <ArtistCard 
+            key={artist.slug} 
+            artist={artist} 
+            index={i} 
+            initialIsFavorite={favorites.includes(artist._id.toString())} 
+          />
         ))}
       </div>
     </div>
