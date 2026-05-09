@@ -2,44 +2,44 @@
 
 ## Phase 1 — Project Initialization
 
-**Status:** `Not Started`
+**Status:** `In Progress`
 
 ### 1.1 Create Project
 
-* [ ] Create Next.js 14 app using App Router
-* [ ] Enable TypeScript
-* [ ] Initialize Git repository
-* [ ] Setup folder structure from SRS
-* [ ] Configure path aliases (`@/components`, `@/lib`, etc.)
+* [x] Create Next.js app using App Router
+* [x] Enable TypeScript
+* [x] Initialize Git repository
+* [x] Setup folder structure from SRS
+* [x] Configure path aliases (`@/components`, `@/lib`, etc.)
 
 ### 1.2 Install Dependencies
 
-* [ ] Install Tailwind CSS
-* [ ] Install shadcn/ui
-* [ ] Install mongoose
-* [ ] Install next-auth
-* [ ] Install zod
-* [ ] Install bcryptjs
-* [ ] Install slugify
-* [ ] Install swr
-* [ ] Install imagekitio-next
+* [x] Install Tailwind CSS
+* [x] Install shadcn/ui
+* [x] Install mongoose
+* [x] Install next-auth
+* [x] Install zod
+* [x] Install bcryptjs
+* [x] Install slugify
+* [x] Install swr
+* [x] Install imagekitio-next
 
 ### 1.3 Configure Base Project
 
-* [ ] Setup Tailwind config
-* [ ] Setup globals.css
-* [ ] Configure shadcn/ui
-* [ ] Configure Next.js image domains
-* [ ] Configure ESLint
-* [ ] Configure prettier (optional)
+* [x] Setup Tailwind config
+* [x] Setup globals.css
+* [x] Configure shadcn/ui
+* [x] Configure Next.js image domains
+* [x] Configure ESLint
+* [x] Configure prettier (optional)
 
 ### 1.4 Setup Environment Variables
 
-* [ ] Create `.env.local`
-* [ ] Add MongoDB URI
-* [ ] Add NextAuth secret
-* [ ] Add admin credentials
-* [ ] Add ImageKit credentials
+* [x] Create `.env.local`
+* [x] Add MongoDB URI
+* [x] Add NextAuth secret
+* [x] Add admin credentials
+* [x] Add ImageKit credentials
 
 ### 1.5 Setup Database
 
@@ -47,16 +47,16 @@
 * [ ] Create database cluster
 * [ ] Create database user
 * [ ] Whitelist IP
-* [ ] Test MongoDB connection
-* [ ] Create mongoose singleton connection
+* [x] Test MongoDB connection
+* [x] Create mongoose singleton connection
 
 ### 1.6 Setup Authentication
 
-* [ ] Configure NextAuth credentials provider
-* [ ] Create authOptions
-* [ ] Create login API route
-* [ ] Create login page
-* [ ] Protect `/admin/*` routes using middleware
+* [x] Configure NextAuth credentials provider
+* [x] Create authOptions
+* [x] Create login API route
+* [x] Create login page
+* [x] Protect `/admin/*` routes using middleware
 
 ### 1.7 Initial Deployment
 

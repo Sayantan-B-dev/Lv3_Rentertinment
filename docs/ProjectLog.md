@@ -2,9 +2,8 @@
 
 ## Current Status
 
-Core frontend structure completed.
-Documentation system completed.
-Migration from `src/app` to `app/` completed.
+Phase 1 foundation completed in code.
+Phase 2 model and API implementation is next.
 
 ## Latest Major Changes
 
@@ -20,17 +19,17 @@ Phase 2 — Database Setup
 
 ## Current Priority
 
-- Setup MongoDB connection
 - Create Artist schema
 - Create Inquiry schema
-- Create API foundation
+- Implement public APIs
+- Implement admin APIs
 
 ## Recently Completed
 
-- Project migration
-- Docs restructuring
-- Tailwind preparation
-- App Router restructuring
+- Phase 1 dependency and config setup
+- NextAuth credentials auth scaffold
+- Admin login route and middleware protection
+- Mongoose singleton connection and DB health endpoint
 
 ## Important Decisions
 

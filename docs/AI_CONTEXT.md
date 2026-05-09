@@ -34,12 +34,40 @@ Before making any change, read the project documents in the exact order below.
 
 # SRS Priority Rule
 
-If assumptions conflict with implementation details,
-follow `ProjectSRS.md`.
+If assumptions conflict with implementation details:
+- follow `ProjectSRS.md`
 
-Do not override SRS decisions unless explicitly updated in:
+Do not override SRS decisions unless explicitly updated inside:
 - `ProjectPlan.md`
 - `ProjectLog.md`
+
+---
+
+# Context Efficiency Rules
+
+- Prefer reading only relevant files instead of the entire repository.
+- Prefer compact logs and summaries over long explanations.
+- Avoid rewriting large files unnecessarily.
+- Avoid repeating already-established architecture decisions.
+- Use existing patterns before creating new abstractions.
+- Keep edits localized and incremental.
+- Read only required sections of the SRS whenever possible.
+- Prefer extending existing components instead of generating replacements.
+- Minimize unnecessary planning and analysis token usage.
+
+---
+
+# Memory Rules
+
+Project memory priority:
+
+1. Current task files
+2. `ProjectLog.md`
+3. Current monthly log
+4. Relevant SRS sections
+5. Remaining docs only if necessary
+
+Avoid loading unnecessary context.
 
 ---
 
@@ -75,18 +103,93 @@ If the current monthly log does not exist:
 
 ---
 
-# Logging Format
+# Logging Rules
 
-Use compact entries.
+For every completed task:
+
+- Record changed files.
+- Record major decisions.
+- Record installed dependencies.
+- Record terminal commands used.
+- Record migrations, generators, and scripts executed.
+- Record environment variable additions or changes.
+- Record database/schema changes.
+- Record route additions or deletions.
+
+Keep logs compact and chronological.
+
+---
+
+# Command Logging Format
+
+Use compact command logs.
 
 Example:
 
-- `app/page.tsx` => rebuilt homepage hero
-- `components/home/HeroSection.tsx` => added search section
-- `lib/models/Artist.ts` => added indexes
-- `app/api/search/route.ts` => optimized filters
+```bash
+npm install mongoose next-auth zod
+npx shadcn-ui@latest init
+npm run dev
+````
 
-Avoid long explanations inside logs.
+---
+
+# File Change Format
+
+* `app/page.tsx` => rebuilt homepage hero
+* `lib/db/connect.ts` => added mongoose singleton
+* `app/api/search/route.ts` => added search endpoint
+
+---
+
+# Dependency Change Format
+
+* added `mongoose`
+* added `next-auth`
+* removed `axios`
+
+---
+
+# Environment Change Format
+
+* added `MONGODB_URI`
+* added `NEXTAUTH_SECRET`
+* updated `IMAGEKIT_URL_ENDPOINT`
+
+---
+
+# Monthly Log Structure
+
+Recommended structure for `logs/YYYY-MM.md`:
+
+````md
+# 2026-05
+
+## 2026-05-09
+
+### Completed
+- Added artist schema
+- Added inquiry schema
+
+### Files
+- `lib/models/Artist.ts` => created schema
+- `lib/models/Inquiry.ts` => created schema
+
+### Commands
+
+```bash
+npm install mongoose
+npm install zod
+````
+
+### Notes
+
+* MongoDB singleton implemented
+* Search indexes added
+
+```
+
+Avoid long explanations unless necessary for future debugging.
 
 ---
 
@@ -221,6 +324,105 @@ Prefer:
 Avoid:
 - deeply nested relative imports
 - circular dependencies
+
+---
+
+# Execution Rules
+
+- Do not explain obvious code changes unless requested.
+- Do not restate existing architecture decisions.
+- Do not generate large summaries after small edits.
+- Avoid repeating previously established context.
+- Avoid scanning unrelated directories.
+- Avoid opening large files unless necessary.
+- Avoid generating duplicate utilities or wrappers.
+- Prefer editing existing files over creating new ones.
+- Prefer targeted patches over full-file rewrites.
+
+---
+
+# Planning Rules
+
+Before implementing:
+
+1. Identify the smallest valid change.
+2. Reuse existing patterns whenever possible.
+3. Avoid speculative architecture.
+4. Avoid future-proofing beyond MVP scope.
+5. Stay within current phase from `ProjectPlan.md`.
+
+Do not redesign stable systems unnecessarily.
+
+---
+
+# File Reading Rules
+
+Read files in this priority order:
+
+1. Current task files
+2. Direct dependencies/imports
+3. Relevant SRS section
+4. Relevant logs
+5. Remaining project files only if required
+
+Avoid repository-wide scanning unless explicitly necessary.
+
+---
+
+# Response Rules
+
+Keep responses:
+- compact
+- implementation-focused
+- low-noise
+- low-redundancy
+
+Prefer:
+- direct edits
+- concise reasoning
+- actionable outputs
+
+Avoid:
+- motivational text
+- repeated summaries
+- unnecessary explanations
+- verbose planning
+
+---
+
+# Component Rules
+
+Before creating a new component:
+
+- check existing components first
+- extend reusable UI where possible
+- avoid one-time wrapper components
+- avoid deeply nested abstractions
+
+Keep component hierarchy shallow and predictable.
+
+---
+
+# API Rules
+
+- Reuse existing service patterns.
+- Keep API responses consistent.
+- Avoid creating unnecessary endpoints.
+- Prefer extending filters over duplicating APIs.
+- Keep validation centralized.
+
+---
+
+# Dependency Rules
+
+Before adding dependencies:
+
+1. Check if existing stack already solves the problem.
+2. Prefer native Next.js or React solutions.
+3. Avoid dependencies for small utilities.
+4. Avoid overlapping libraries.
+
+Minimize dependency growth.
 
 ---
 
