@@ -51,7 +51,7 @@ const artistSchema = new mongoose.Schema({
 
 artistSchema.index({ name: "text", about: "text", category: "text" });
 
-artistSchema.pre("save", function (next) {
+artistSchema.pre("save", function () {
   this.search = {
     name_lower: this.name?.toLowerCase() || "",
     category_lower: this.category?.toLowerCase() || "",
@@ -59,7 +59,6 @@ artistSchema.pre("save", function (next) {
     genres_lower: this.performance?.genres?.map((g: string) => g.toLowerCase()) || [],
     languages_lower: this.performance?.languages?.map((l: string) => l.toLowerCase()) || []
   };
-  next();
 });
 
 export default mongoose.models.Artist || mongoose.model("Artist", artistSchema);

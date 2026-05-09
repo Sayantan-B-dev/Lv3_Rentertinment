@@ -1,17 +1,18 @@
 import { NextResponse } from "next/server";
-import connectDB from "@/lib/db/connect";
+import { connectToDatabase } from "@/lib/db/connect";
 import Inquiry from "@/lib/models/Inquiry";
 import { apiSuccess, apiError } from "@/lib/utils/apiResponse";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/authOptions";
 
 // ADMIN ONLY: Update inquiry status
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
-  try {
+export async function PUT(request: any, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    try {
     const session = await getServerSession(authOptions);
     if (!session) return apiError("Unauthorized", 401);
 
-    await connectDB();
+    await connectToDatabase();
     const body = await request.json();
     const { status } = body;
 
@@ -20,7 +21,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     }
 
     const inquiry = await Inquiry.findByIdAndUpdate(
-      params.id,
+      id,
       { status },
       { new: true }
     );
@@ -34,13 +35,14 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 }
 
 // ADMIN ONLY: Delete inquiry
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
-  try {
+export async function DELETE(request: any, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    try {
     const session = await getServerSession(authOptions);
     if (!session) return apiError("Unauthorized", 401);
 
-    await connectDB();
-    const inquiry = await Inquiry.findByIdAndDelete(params.id);
+    await connectToDatabase();
+    const inquiry = await Inquiry.findByIdAndDelete(id);
     
     if (!inquiry) return apiError("Inquiry not found", 404);
 

@@ -1,13 +1,14 @@
 import { getArtists } from "@/lib/services/artistService";
 import Link from "next/link";
-import { formatDuration } from "@/lib/utils/formatters";
+import ArtistCard from "@/components/ui/ArtistCard";
 
-export default async function ArtistsPage({ searchParams }: { searchParams: { page?: string, category?: string, city?: string } }) {
-  const page = parseInt(searchParams.page || "1", 10);
+export default async function ArtistsPage({ searchParams }: { searchParams: Promise<{ page?: string, category?: string, city?: string }> }) {
+  const params = await searchParams;
+  const page = parseInt(params.page || "1", 10);
   const { artists, totalPages, total } = await getArtists({ 
     page, 
-    category: searchParams.category, 
-    city: searchParams.city 
+    category: params.category, 
+    city: params.city 
   });
 
   return (
@@ -21,33 +22,8 @@ export default async function ArtistsPage({ searchParams }: { searchParams: { pa
       </div>
 
       <div className="artists-grid">
-        {artists.map((artist) => (
-          <Link key={artist.slug} className="artist-card" href={`/artists/${artist.slug}`}>
-            <div className="artist-img-wrap">
-              <img src={artist.media?.images?.[0] || "/images/placeholder.jpg"} alt={artist.name} loading="lazy" />
-              <div className="artist-badge-cat">{artist.category}</div>
-              <div className="artist-overlay">
-                <button className="artist-overlay-btn">Book Now →</button>
-              </div>
-            </div>
-            <div className="artist-info">
-              <div className="artist-name">{artist.name}</div>
-              <div className="artist-meta">
-                <span className="artist-loc">
-                  📍 {artist.location?.city || "India"}
-                </span>
-              </div>
-              <div className="artist-genres">
-                {artist.performance?.genres?.slice(0, 3).map((g: string) => (
-                  <span key={g} className="genre-tag">{g}</span>
-                ))}
-              </div>
-              <div className="artist-footer">
-                <span className="artist-duration">⏱ {formatDuration(artist.performance?.duration_minutes?.min, artist.performance?.duration_minutes?.max)}</span>
-                <button className="artist-book-btn">Enquire</button>
-              </div>
-            </div>
-          </Link>
+        {artists.map((artist, i) => (
+          <ArtistCard key={artist.slug} artist={artist} index={i} />
         ))}
       </div>
 

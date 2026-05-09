@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import connectDB from "@/lib/db/connect";
+import { connectToDatabase } from "@/lib/db/connect";
 import Inquiry from "@/lib/models/Inquiry";
 import { inquirySchemaValidation } from "@/lib/utils/validators";
 import { apiSuccess, apiError } from "@/lib/utils/apiResponse";
@@ -9,7 +9,7 @@ import { authOptions } from "@/lib/auth/authOptions";
 // PUBLIC: Submit a new inquiry
 export async function POST(request: Request) {
   try {
-    await connectDB();
+    await connectToDatabase();
     const body = await request.json();
     const parsedData = inquirySchemaValidation.parse(body);
     
@@ -28,7 +28,7 @@ export async function GET(request: Request) {
       return apiError("Unauthorized", 401);
     }
 
-    await connectDB();
+    await connectToDatabase();
     const inquiries = await Inquiry.find().sort({ createdAt: -1 }).lean();
     return apiSuccess(inquiries);
   } catch (error: any) {

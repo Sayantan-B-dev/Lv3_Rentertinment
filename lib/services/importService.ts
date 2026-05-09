@@ -1,10 +1,10 @@
 import { artistSchemaValidation } from "@/lib/utils/validators";
 import Artist from "@/lib/models/Artist";
-import connectDB from "@/lib/db/connect";
+import { connectToDatabase } from "@/lib/db/connect";
 import { slugify } from "@/lib/utils/slugify";
 
 export async function importArtistsFromJSON(data: any[]) {
-  await connectDB();
+  await connectToDatabase();
   const summary = { total: data.length, created: 0, updated: 0, failed: 0, errors: [] as any[] };
 
   for (let i = 0; i < data.length; i++) {

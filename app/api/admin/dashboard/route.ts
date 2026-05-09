@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth/authOptions";
-import connectDB from "@/lib/db/connect";
+import { connectToDatabase } from "@/lib/db/connect";
 import Artist from "@/lib/models/Artist";
 import Inquiry from "@/lib/models/Inquiry";
 import { apiSuccess, apiError } from "@/lib/utils/apiResponse";
@@ -11,7 +11,7 @@ export async function GET(request: Request) {
     const session = await getServerSession(authOptions);
     if (!session) return apiError("Unauthorized", 401);
 
-    await connectDB();
+    await connectToDatabase();
 
     const [totalArtists, totalInquiries, newInquiries, contactedInquiries, closedInquiries, recentInquiries] = await Promise.all([
       Artist.countDocuments(),

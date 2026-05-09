@@ -1,9 +1,9 @@
 import Artist from "@/lib/models/Artist";
-import connectDB from "@/lib/db/connect";
+import { connectToDatabase } from "@/lib/db/connect";
 import { slugify } from "@/lib/utils/slugify";
 
 export async function getArtists(params: { category?: string; city?: string; page?: number; limit?: number; featured?: boolean }) {
-  await connectDB();
+  await connectToDatabase();
   const filter: any = {};
   if (params.category) filter["search.category_lower"] = params.category.toLowerCase();
   if (params.city) filter["search.city_lower"] = params.city.toLowerCase();
@@ -21,17 +21,17 @@ export async function getArtists(params: { category?: string; city?: string; pag
 }
 
 export async function getArtistBySlug(slug: string) {
-  await connectDB();
+  await connectToDatabase();
   return Artist.findOne({ slug }).lean();
 }
 
 export async function getArtistById(id: string) {
-  await connectDB();
+  await connectToDatabase();
   return Artist.findById(id).lean();
 }
 
 export async function createArtist(data: any) {
-  await connectDB();
+  await connectToDatabase();
   if (!data.slug) {
     data.slug = slugify(data.name);
   }
@@ -39,7 +39,7 @@ export async function createArtist(data: any) {
 }
 
 export async function updateArtist(id: string, data: any) {
-  await connectDB();
+  await connectToDatabase();
   if (data.name && !data.slug) {
     data.slug = slugify(data.name);
   }
@@ -52,6 +52,6 @@ export async function updateArtist(id: string, data: any) {
 }
 
 export async function deleteArtist(id: string) {
-  await connectDB();
+  await connectToDatabase();
   return Artist.findByIdAndDelete(id);
 }

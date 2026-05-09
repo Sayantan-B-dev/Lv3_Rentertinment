@@ -1,31 +1,5 @@
 @import "tailwindcss";
 
-:root {
-  --background: #0a0807;
-  --foreground: #f0ebe4;
-  --surface: #231e18;
-  --border: #2e2820;
-  --gold: #d4a017;
-  --saffron: #e8671a;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
-}
-
-* {
-  border-color: var(--border);
-}
-
 
     /* ── RESET & ROOT ─────────────────────────────────── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -54,7 +28,7 @@ body {
       --tr:        .3s cubic-bezier(.4,0,.2,1);
     }
 
-    
+    [data-theme="light"] {
       --bg:      #faf8f4;
       --bg2:     #f0ebe3;
       --bg3:     #e8e1d6;
@@ -93,7 +67,7 @@ body {
       padding: 0 clamp(1rem, 4vw, 2.5rem);
       transition: background var(--tr), border-color var(--tr);
     }
-    
+    [data-theme="light"] header { background: rgba(250,248,244,.9); }
 
     .hdr-inner {
       display: flex; align-items: center;
@@ -150,7 +124,7 @@ body {
       border-radius: 50%;
       transition: transform var(--tr), background var(--tr);
     }
-    
+    [data-theme="light"] .theme-toggle::before { transform: translateX(18px); }
 
     .btn-primary {
       padding: .5rem 1.25rem;
@@ -912,18 +886,18 @@ body {
     }
 
     /* ── LIGHT MODE HEADER OVERRIDE ───────────────────── */
-    
-    
-    
-    
-    
-    
-    
-    
+    [data-theme="light"] .footer-brand p,
+    [data-theme="light"] .footer-col a { color: var(--text3); }
+    [data-theme="light"] .hero-grid { opacity: .2; }
+    [data-theme="light"] .cat-card,
+    [data-theme="light"] .artist-card,
+    [data-theme="light"] .step,
+    [data-theme="light"] .testimonial-card,
+    [data-theme="light"] .stat-cell {
       background: #ffffff;
       box-shadow: 0 2px 20px rgba(0,0,0,.06);
     }
-    
+    [data-theme="light"] .stat-cell { background: #ffffff; }
 
     /* ── MOBILE BADGE ─────────────────────────────────── */
     .mob-badge {

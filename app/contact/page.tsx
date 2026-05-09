@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function ContactPage() {
+function ContactForm() {
   const searchParams = useSearchParams();
   const artistSlug = searchParams.get("artist") || "";
 
@@ -16,9 +16,6 @@ export default function ContactPage() {
     const fd = new FormData(e.currentTarget);
     const data = Object.fromEntries(fd);
 
-    // Hardcoding an artistId just for the form submission to pass validation
-    // In a real app we'd fetch the artist ID based on slug, but here we just
-    // pass a dummy 24 char hex or fetch it.
     data.artistId = "5f8f8c44b54764421b7156e9"; // dummy valid ObjectId
 
     try {
@@ -111,5 +108,13 @@ export default function ContactPage() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function ContactPage() {
+  return (
+    <Suspense fallback={<div className="section-inner" style={{ padding: '7rem 2.5rem', textAlign: 'center' }}>Loading form...</div>}>
+      <ContactForm />
+    </Suspense>
   );
 }

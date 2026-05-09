@@ -1,8 +1,8 @@
 import Artist from "@/lib/models/Artist";
-import connectDB from "@/lib/db/connect";
+import { connectToDatabase } from "@/lib/db/connect";
 
 export async function searchArtists(q: string, filters?: { category?: string; city?: string }) {
-  await connectDB();
+  await connectToDatabase();
   const query: any = { $text: { $search: q } };
   if (filters?.category) query["search.category_lower"] = filters.category.toLowerCase();
   if (filters?.city) query["search.city_lower"] = filters.city.toLowerCase();
@@ -13,11 +13,11 @@ export async function searchArtists(q: string, filters?: { category?: string; ci
 }
 
 export async function getDistinctCategories() {
-  await connectDB();
+  await connectToDatabase();
   return Artist.distinct("category");
 }
 
 export async function getDistinctCities() {
-  await connectDB();
+  await connectToDatabase();
   return Artist.distinct("location.city");
 }
