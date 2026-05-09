@@ -2,13 +2,13 @@
 
 import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { toast } from "sonner";
 
 function ContactForm() {
   const searchParams = useSearchParams();
   const artistSlug = searchParams.get("artist") || "";
 
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [msg, setMsg] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,37 +28,25 @@ function ContactForm() {
       const result = await res.json();
       if (res.ok) {
         setStatus("success");
-        setMsg("Your inquiry has been submitted! Our team will contact you shortly.");
+        toast.success("Inquiry submitted! Our team will contact you shortly.");
         (e.target as HTMLFormElement).reset();
       } else {
         setStatus("error");
-        setMsg(result.message || "Failed to submit inquiry.");
+        toast.error(result.message || "Failed to submit inquiry.");
       }
     } catch (err: any) {
       setStatus("error");
-      setMsg("Network error occurred.");
+      toast.error("Network error occurred.");
     }
   };
 
   return (
-    <div className="section-inner pt-nav">
-      <div className="max-w-2xl mx-auto">
-        <div className="section-label justify-center">Get in Touch</div>
+    <div className="flex flex-col items-center justify-center min-h-[90vh] py-20 px-4">
+      <div className="w-full max-w-2xl">
+        <div className="section-label justify-center mx-auto w-full">Get in Touch</div>
         <h1 className="section-title text-center mb-10">Book an <span>Artist</span></h1>
 
-        {status === "success" && (
-          <div className="p-4 bg-gold/10 border border-gold rounded-2xl text-gold mb-8 text-center animate-fade-in">
-            {msg}
-          </div>
-        )}
-
-        {status === "error" && (
-          <div className="p-4 bg-crimson/10 border border-crimson rounded-2xl text-crimson mb-8 text-center animate-fade-in">
-            {msg}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="admin-section space-y-6">
+        <form onSubmit={handleSubmit} className="admin-section space-y-8">
           
           <div>
             <label className="block text-sm font-medium mb-2 opacity-70">Artist Name</label>

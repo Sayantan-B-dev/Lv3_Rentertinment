@@ -165,7 +165,7 @@
 .marquee-item::before { content: '✦'; color: var(--gold); font-size: .6rem; }
 
 /* ── SECTION SHARED ───────────────────────────────── */
-section { padding: clamp(4rem, 8vw, 7rem) clamp(1rem, 4vw, 2.5rem); }
+section:not([data-sonner-toaster]) { padding: clamp(4rem, 8vw, 7rem) clamp(1rem, 4vw, 2.5rem); }
 
 .section-label {
   display: inline-flex; align-items: center; gap: .5rem;
@@ -194,7 +194,7 @@ section { padding: clamp(4rem, 8vw, 7rem) clamp(1rem, 4vw, 2.5rem); }
 .section-desc { color: var(--text2); line-height: 1.7; max-width: 500px; }
 
 /* ── CATEGORIES ───────────────────────────────────── */
-#categories { background: var(--bg2); }
+#categories { background: transparent; }
 
 .categories-header {
   display: flex; align-items: flex-end; justify-content: space-between;
@@ -472,3 +472,29 @@ section { padding: clamp(4rem, 8vw, 7rem) clamp(1rem, 4vw, 2.5rem); }
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .artists-grid { grid-template-columns: 1fr; }
 }
+
+/* ── MOUSE TRAIL ──────────────────────────────────── */
+.mouse-trail-img {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 1;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+  opacity: 0;
+  transform: scale(0.3) rotate(-15deg);
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.mouse-trail-img.active {
+  /* Dynamic scale/opacity handled by JS */
+}
+
+.mouse-trail-img.exit {
+  opacity: 0 !important;
+  transform: scale(0.1) rotate(15deg) !important;
+}
+

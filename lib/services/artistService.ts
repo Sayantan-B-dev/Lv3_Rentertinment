@@ -106,3 +106,12 @@ export async function deleteArtist(id: string) {
   await connectToDatabase();
   return Artist.findByIdAndDelete(id);
 }
+
+export async function getRandomArtists(limit: number = 10) {
+  await connectToDatabase();
+  const artists = await Artist.aggregate([
+    { $sample: { size: limit } },
+    { $project: { "media.images": 1 } }
+  ]);
+  return JSON.parse(JSON.stringify(artists));
+}

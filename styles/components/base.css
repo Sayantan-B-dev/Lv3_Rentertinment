@@ -58,3 +58,4 @@ body {
 .text-text3 { color: var(--text3); }
 .text-crimson { color: var(--crimson); }
 .leading-relaxed { line-height: 1.8; }
+section[aria-label="Notifications alt+T"] { padding: 0 !important; margin: 0 !important; height: 0 !important; border: none !important; }

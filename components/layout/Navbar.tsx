@@ -32,7 +32,33 @@ export default function Navbar() {
 
   return (
     <>
-      <header id="site-header" style={{ boxShadow: scrolled ? '0 4px 30px rgba(0,0,0,.5)' : 'none' }}>
+      <header
+        id="site-header"
+        style={{
+          background: scrolled
+            ? 'rgba(6, 5, 4, 0.55)'
+            : 'rgba(6, 5, 4, 0.25)',
+
+          backdropFilter: scrolled
+            ? 'blur(18px) saturate(180%)'
+            : 'blur(10px) saturate(140%)',
+
+          WebkitBackdropFilter: scrolled
+            ? 'blur(18px) saturate(180%)'
+            : 'blur(10px) saturate(140%)',
+
+          boxShadow: scrolled
+            ? '0 4px 30px rgba(0,0,0,.4), 0 1px 0 rgba(212,160,23,0.08)'
+            : '0 4px 20px rgba(0,0,0,.15)',
+
+          borderTop: '1px solid rgba(255,255,255,0.06)',
+          borderLeft: '1px solid rgba(255,255,255,0.06)',
+          borderRight: '1px solid rgba(255,255,255,0.06)',
+          borderBottom: scrolled
+            ? '1px solid rgba(255,255,255,0.08)'
+            : '1px solid rgba(255,255,255,0.04)',
+        }}
+      >
         <div className="hdr-inner">
           <Link href="/" className="logo" onClick={closeNav}>
             <div className="logo-icon">{siteConfig.name.charAt(0)}</div>
@@ -54,7 +80,7 @@ export default function Navbar() {
             {user?.role === "admin" && (
               <Link href="/admin" className="btn-outline" style={{ borderColor: 'var(--gold)', color: 'var(--gold)' }}>Admin Panel</Link>
             )}
-            
+
             {session ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                 <Link href="/profile" className="btn-outline">Profile</Link>
@@ -63,7 +89,7 @@ export default function Navbar() {
             ) : (
               <Link href="/login" className="btn-outline">Login</Link>
             )}
-            
+
             <Link href="/contact" className="btn-primary btn-sm">Book Artist ✦</Link>
             <button className="hamburger" onClick={toggleNav} aria-label="Menu">
               <span style={navOpen ? { transform: 'rotate(45deg) translate(5px, 5px)' } : {}}></span>

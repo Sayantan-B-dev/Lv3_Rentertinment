@@ -5,6 +5,8 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import AuthProvider from "@/components/auth/AuthProvider";
+import { Toaster } from "sonner";
+import CustomCursor from "@/components/ui/CustomCursor";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -54,12 +56,14 @@ export default function RootLayout({
       className={`${playfair.variable} ${outfit.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <CustomCursor />
         <ScrollReveal />
         <AuthProvider>
           <Navbar />
           <main className="flex-grow">{children}</main>
           <Footer />
         </AuthProvider>
+        <Toaster position="top-right" richColors />
       </body>
     </html>
   );

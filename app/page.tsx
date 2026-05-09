@@ -1,4 +1,4 @@
-import { getArtists } from "@/lib/services/artistService";
+import { getArtists, getRandomArtists } from "@/lib/services/artistService";
 import { getDistinctCategories, getCategoryCounts } from "@/lib/services/searchService";
 import { getUserFavorites } from "@/lib/services/userService";
 import { getServerSession } from "next-auth";
@@ -12,11 +12,12 @@ import StatsBar from "@/components/home/StatsBar";
 export const revalidate = 3600;
 
 export default async function HomePage() {
-  const [featuredRes, categories, counts, session] = await Promise.all([
+  const [featuredRes, categories, counts, session, randomArtists] = await Promise.all([
     getArtists({ limit: 4, featured: true }), 
     getDistinctCategories(),
     getCategoryCounts(),
-    getServerSession(authOptions)
+    getServerSession(authOptions),
+    getRandomArtists(15)
   ]);
   
   const favorites = session?.user ? await getUserFavorites((session.user as any).id) : [];
@@ -27,10 +28,14 @@ export default async function HomePage() {
     const fallbackRes = await getArtists({ limit: 4 });
     displayArtists = fallbackRes.artists;
   }
+  
+  const trailImages = randomArtists
+    .map((a: any) => a.media?.images?.[0])
+    .filter((img: string | undefined) => !!img);
 
   return (
     <>
-      <HeroSection categories={categories as string[]} />
+      <HeroSection categories={categories as string[]} trailImages={trailImages} />
       <CategoryGrid counts={counts} />
       <FeaturedArtists artists={displayArtists} favorites={favorites} />
 

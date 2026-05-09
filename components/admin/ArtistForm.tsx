@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 interface ArtistFormProps {
   initialData?: any;
@@ -73,11 +74,11 @@ export default function ArtistForm({ initialData, mode, artistId }: ArtistFormPr
           }
         }));
       } else {
-        alert("Upload failed: " + result.error);
+        toast.error(result.error || "Upload failed");
       }
     } catch (err) {
       console.error(err);
-      alert("Upload error");
+      toast.error("Image upload failed. Please try again.");
     } finally {
       setUploading(false);
     }
@@ -94,7 +95,7 @@ export default function ArtistForm({ initialData, mode, artistId }: ArtistFormPr
       };
 
       const url = mode === "edit" ? `/api/artists/id/${artistId}` : "/api/artists";
-      const method = mode === "edit" ? "PUT" : "POST";
+      const method = mode === "edit" ? "PATCH" : "POST";
 
       const res = await fetch(url, {
         method,
@@ -104,21 +105,24 @@ export default function ArtistForm({ initialData, mode, artistId }: ArtistFormPr
 
       const result = await res.json();
       if (result.success) {
-        router.push("/admin/artists");
-        router.refresh();
+        toast.success(mode === "edit" ? "Artist updated successfully!" : "Artist created successfully!");
+        setTimeout(() => {
+          router.push("/admin/artists");
+          router.refresh();
+        }, 800);
       } else {
-        alert("Operation failed: " + result.error);
+        toast.error(result.error || result.message || "Operation failed");
       }
     } catch (err) {
       console.error(err);
-      alert("Submit error");
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="admin-form-main-card" style={{ marginTop: '1rem' }}>
+    <div className="admin-form-main-card">
       <form onSubmit={handleSubmit} className="w-full">
         
         {/* Section 1: Basic Information */}
