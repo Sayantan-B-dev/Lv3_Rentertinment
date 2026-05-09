@@ -19,6 +19,7 @@ export default function AdminArtistsPage() {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <h1 className="section-title" style={{ fontSize: '2rem', marginBottom: 0 }}>Artists Management</h1>
+        <a href="/admin/artists/new" className="btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}>+ Add Artist</a>
       </div>
       
       <div style={{ background: 'var(--surface)', padding: '1.5rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>

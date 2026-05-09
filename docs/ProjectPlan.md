@@ -326,17 +326,17 @@
 
 ### Artist Form
 
-* [ ] Basic info fields
-* [ ] Location fields
-* [ ] Performance fields
+* [x] Basic info fields
+* [x] Location fields
+* [x] Performance fields
 * [ ] FAQ repeater
-* [ ] Genre tags input
-* [ ] Language tags input
-* [ ] Media upload fields
+* [x] Genre tags input
+* [x] Language tags input
+* [x] Media upload fields
 
 ### Artist Actions
 
-* [ ] Create artist
+* [x] Create artist
 * [ ] Edit artist
 * [ ] Delete artist
 * [ ] Upload images
