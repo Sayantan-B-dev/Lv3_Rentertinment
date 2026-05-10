@@ -25,6 +25,7 @@ Phase 5 — Final Polish + Security Hardening
 
 ## Recently Completed
 
+- Fixed `/contact` booking page spacing so the form clears the fixed Navbar on mobile.
 - Phase 2: Database Models and Backend APIs
 - Phase 3: Public Frontend (Home, Artists, Profile, Search, Inquiries)
 - Phase 4: Admin Dashboard Overhaul (Full-width, SVG icons, Inquiries Status Patching)

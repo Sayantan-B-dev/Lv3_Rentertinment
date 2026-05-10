@@ -34,14 +34,14 @@ function ContactForm() {
         setStatus("error");
         toast.error(result.message || "Failed to submit inquiry.");
       }
-    } catch (err: any) {
+    } catch {
       setStatus("error");
       toast.error("Network error occurred.");
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[90vh] py-20 px-4">
+    <div className="section-inner pt-nav flex min-h-[90vh] flex-col items-center justify-center">
       <div className="w-full max-w-2xl">
         <div className="section-label justify-center mx-auto w-full">Get in Touch</div>
         <h1 className="section-title text-center mb-10">Book an <span>Artist</span></h1>
