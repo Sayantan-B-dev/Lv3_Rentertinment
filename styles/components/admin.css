@@ -1,7 +1,7 @@
 /* ── ADMIN SIDEBAR ────────────────────────────────── */
 .admin-sidebar {
   width: 260px;
-  background: rgba(15, 15, 15, 0.8);
+  background: rgba(5, 7, 10, 0.8);
   backdrop-filter: blur(20px);
   border-right: 1px solid var(--border);
   padding: 2.5rem 1.5rem;
@@ -51,10 +51,10 @@
   color: var(--text);
 }
 .admin-nav-item.active {
-  background: rgba(212, 160, 23, 0.15);
+  background: rgba(0, 210, 255, 0.1);
   color: var(--gold);
   font-weight: 600;
-  border-color: rgba(212, 160, 23, 0.2);
+  border-color: rgba(0, 210, 255, 0.2);
 }
 .admin-sidebar-footer {
   margin-top: auto;
@@ -304,7 +304,7 @@
 }
 .admin-badge {
   padding: 0.4rem 0.8rem;
-  background: rgba(212, 160, 23, 0.1);
+  background: rgba(0, 210, 255, 0.1);
   color: var(--gold);
   border-radius: 8px;
   font-size: 0.85rem;
@@ -421,7 +421,7 @@
 .admin-input-base:focus {
   outline: none;
   border-color: var(--gold) !important;
-  box-shadow: 0 0 0 4px rgba(212, 160, 23, 0.1) !important;
+  box-shadow: 0 0 0 4px rgba(0, 210, 255, 0.1) !important;
 }
 .admin-textarea {
   min-height: 160px;
@@ -444,8 +444,8 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.4rem 0.8rem;
-  background: rgba(212, 160, 23, 0.1);
-  border: 1px solid rgba(212, 160, 23, 0.2);
+  background: rgba(0, 210, 255, 0.1);
+  border: 1px solid rgba(0, 210, 255, 0.2);
   border-radius: 8px;
   color: var(--gold);
   font-size: 0.8rem;
@@ -508,7 +508,7 @@
 .admin-upload-btn:hover {
   border-color: var(--gold);
   color: var(--gold);
-  background: rgba(212, 160, 23, 0.05);
+  background: rgba(0, 210, 255, 0.05);
 }
 /* ── MODAL ────────────────────────────────────────── */
 .modal-overlay {

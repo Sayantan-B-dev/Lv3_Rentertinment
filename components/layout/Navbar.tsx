@@ -36,8 +36,8 @@ export default function Navbar() {
         id="site-header"
         style={{
           background: scrolled
-            ? 'rgba(6, 5, 4, 0.55)'
-            : 'rgba(6, 5, 4, 0.25)',
+            ? 'rgba(5, 7, 10, 0.65)'
+            : 'rgba(5, 7, 10, 0.35)',
 
           backdropFilter: scrolled
             ? 'blur(18px) saturate(180%)'
@@ -48,15 +48,15 @@ export default function Navbar() {
             : 'blur(10px) saturate(140%)',
 
           boxShadow: scrolled
-            ? '0 4px 30px rgba(0,0,0,.4), 0 1px 0 rgba(212,160,23,0.08)'
+            ? '0 4px 30px rgba(0,0,0,.4), 0 1px 0 rgba(0, 210, 255, 0.1)'
             : '0 4px 20px rgba(0,0,0,.15)',
 
           borderTop: '1px solid rgba(255,255,255,0.06)',
           borderLeft: '1px solid rgba(255,255,255,0.06)',
           borderRight: '1px solid rgba(255,255,255,0.06)',
           borderBottom: scrolled
-            ? '1px solid rgba(226, 147, 43, 0.51)'
-            : '1px solid rgba(255, 255, 255, 0.21)',
+            ? '1px solid rgba(0, 210, 255, 0.5)'
+            : '1px solid rgba(255, 255, 255, 0.2)',
         }}
       >
         <div className="hdr-inner">

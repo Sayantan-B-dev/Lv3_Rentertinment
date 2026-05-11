@@ -6,10 +6,10 @@ header {
   right: 0;
   z-index: 1000;
   height: var(--hdr-h);
-  background: rgba(6, 5, 4, 0.5);
+  background: rgba(5, 7, 10, 0.6);
   backdrop-filter: blur(40px) saturate(180%) brightness(0.9);
   -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(0.9);
-  border-bottom: 1px solid rgba(212, 160, 23, 0.08);
+  border-bottom: 1px solid rgba(0, 210, 255, 0.1);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.04);
   display: flex;
   align-items: center;
@@ -47,7 +47,7 @@ header {
   place-items: center;
   font-size: 16px;
   font-weight: 900;
-  color: #0a0807;
+  color: #ffffff;
   flex-shrink: 0;
 }
 .logo-text {
@@ -199,7 +199,7 @@ footer {
 .social-link:hover {
   border-color: var(--gold);
   color: var(--gold);
-  background: rgba(212, 160, 23, .08);
+  background: rgba(0, 210, 255, .08);
 }
 .footer-col h4 {
   font-size: .9rem;
