@@ -16,8 +16,8 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-brand">
             <Link href="/" className="logo" style={{ marginBottom: '.5rem', display: 'inline-flex' }}>
-              <div className="logo-icon">{siteConfig.name.charAt(0)}</div>
-              <div className="logo-text">{siteConfig.name} <span>India's Artist Platform</span></div>
+              <div className="logo-icon">{(siteConfig.name || "B").charAt(0)}</div>
+              <div className="logo-text">{siteConfig.name || "BlueEye"} <span>India's Artist Platform</span></div>
             </Link>
             <p>India's premier platform to discover, book and manage artists — from Bollywood legends to emerging independent stars.</p>
             <div className="social-links">
