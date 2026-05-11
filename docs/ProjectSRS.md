@@ -1,11 +1,11 @@
 # Software Requirements Specification
-## Rentertinment — Indian Artists Booking Platform (MVP)
+## BlueEye — Indian Artists Booking Platform (MVP)
 
 ---
 
 ## 1. Project Overview
 
-Rentertinment is a Next.js 14 web application that enables discovery and booking inquiries for Indian performing artists — singers, bands, comedians, dancers, DJs, and more. Admins manage the artist catalogue via a secure dashboard and can bulk‑import artists from JSON. Visitors browse, search, and filter artists by category, city, genre, and language, then submit a booking inquiry that is stored for admin follow‑up.
+BlueEye is a Next.js 14 web application that enables discovery and booking inquiries for Indian performing artists — singers, bands, comedians, dancers, DJs, and more. Admins manage the artist catalogue via a secure dashboard and can bulk‑import artists from JSON. Visitors browse, search, and filter artists by category, city, genre, and language, then submit a booking inquiry that is stored for admin follow‑up.
 
 **Version 1 (MVP)** focuses on the core loop: artist discovery → profile view → inquiry submission → admin management. No event management, vendor system, calendar, quotations, or payments are included in the initial release.
 
@@ -31,7 +31,7 @@ Rentertinment is a Next.js 14 web application that enables discovery and booking
 ## 3. Folder Structure
 
 ```
-Rentertinment/
+BlueEye/
 ├── app/
 │   ├── layout.tsx                  # Root layout (no theme provider – style from demo.html)
 │   ├── page.tsx                    # / Home
@@ -193,7 +193,7 @@ Rentertinment/
 | `/category/[category]` | Artists by category | `GET /api/artists?category=` | SSR |
 | `/city/[city]` | Artists by city | `GET /api/artists?city=` | SSR |
 | `/search` | Search results | `GET /api/search?q=&...` | SSR (no cache) |
-| `/about` | About Rentertinment | Static | SSG |
+| `/about` | About BlueEye | Static | SSG |
 | `/contact` | General contact (optional) | Static + form | SSG |
 
 **Query params for list pages**: `?page=N&sort=name|recent&limit=12`
@@ -489,7 +489,7 @@ If the demo includes dark/light mode, implement it using `next-themes` and the d
 MONGODB_URI=mongodb+srv://...
 NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=<openssl rand -base64 32>
-ADMIN_EMAIL=admin@Rentertinment.in
+ADMIN_EMAIL=admin@BlueEye.in
 ADMIN_PASSWORD_HASH=<bcrypt hash>
 
 # ImageKit
@@ -503,7 +503,7 @@ IMAGEKIT_URL_ENDPOINT=https://ik.imagekit.io/your_id
 ## 10. SEO & Metadata
 
 All public pages export `generateMetadata`. For artist profiles:
-- Title: `{artist.name} – Book for {artist.category} performance in {artist.location.city} | Rentertinment`
+- Title: `{artist.name} – Book for {artist.category} performance in {artist.location.city} | BlueEye`
 - Description: First 150 characters of `artist.about`
 - OpenGraph image: first image from `artist.media.images` (if exists)
 - Canonical URL: `/artists/{artist.slug}`

@@ -1,4 +1,4 @@
-# Rentertinment MVP — Complete Development TODO Roadmap
+# BlueEye MVP — Complete Development TODO Roadmap
 
 ## Phase 1 — Project Initialization
 

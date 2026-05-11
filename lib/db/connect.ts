@@ -4,9 +4,9 @@ declare global {
   // eslint-disable-next-line no-var
   var __mongoose:
     | {
-        conn: typeof mongoose | null;
-        promise: Promise<typeof mongoose> | null;
-      }
+      conn: typeof mongoose | null;
+      promise: Promise<typeof mongoose> | null;
+    }
     | undefined;
 }
 
@@ -27,7 +27,7 @@ export async function connectToDatabase() {
 
   if (!cached.promise) {
     cached.promise = mongoose.connect(process.env.MONGODB_URI, {
-      dbName: process.env.MONGODB_DB_NAME || "rentertinment",
+      dbName: process.env.MONGODB_DB_NAME || "BlueEye",
     });
   }
 

@@ -11,11 +11,11 @@ export async function sendInquiryEmail(data: {
   eventType: string;
   message?: string;
 }) {
-  const toEmail = process.env.EMAIL_TO || "info@rentertinment.in";
+  const toEmail = process.env.EMAIL_TO || "info@BlueEye.in";
 
   try {
     const { data: resData, error } = await resend.emails.send({
-      from: "Rentertinment <onboarding@resend.dev>", // Replace with verified domain in prod
+      from: "BlueEye <onboarding@resend.dev>", // Replace with verified domain in prod
       to: [toEmail],
       subject: `New Inquiry for ${data.artistName} from ${data.clientName}`,
       html: `
@@ -33,7 +33,7 @@ export async function sendInquiryEmail(data: {
             ${data.message || "No message provided."}
           </div>
           <br />
-          <p style="font-size: 0.8rem; color: #777;">This inquiry was sent from the Rentertinment platform.</p>
+          <p style="font-size: 0.8rem; color: #777;">This inquiry was sent from the BlueEye platform.</p>
         </div>
       `,
     });
@@ -52,13 +52,13 @@ export async function sendInquiryEmail(data: {
 export async function sendVerificationEmail(email: string, code: string) {
   try {
     const { data: resData, error } = await resend.emails.send({
-      from: "Rentertinment <onboarding@resend.dev>",
+      from: "BlueEye <onboarding@resend.dev>",
       to: [email],
-      subject: "Verify your Rentertinment Account",
+      subject: "Verify your BlueEye Account",
       html: `
         <div style="font-family: sans-serif; text-align: center; padding: 2rem; background: #0a0807; color: #fff;">
           <h2 style="color: #d4a017;">Verify Your Account</h2>
-          <p>Thank you for joining Rentertinment. Use the code below to verify your email address. This code will expire in 10 minutes.</p>
+          <p>Thank you for joining BlueEye. Use the code below to verify your email address. This code will expire in 10 minutes.</p>
           <div style="font-size: 2.5rem; font-weight: bold; color: #d4a017; margin: 2rem 0; letter-spacing: 0.5rem; background: rgba(212,160,23,0.1); padding: 1rem; border-radius: 10px; border: 1px dashed #d4a017;">
             ${code}
           </div>

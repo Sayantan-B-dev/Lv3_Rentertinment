@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-const content = fs.readFileSync('g:\\code\\Web techs\\projects\\ArtistHub\\Rentertinment\\styles\\components\\home.css', 'utf8');
+const content = fs.readFileSync('g:\\code\\Web techs\\projects\\ArtistHub\\BlueEye\\styles\\components\\home.css', 'utf8');
 let openBraces = 0;
 let lines = content.split('\n');
 

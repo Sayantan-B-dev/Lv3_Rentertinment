@@ -1,7 +1,7 @@
 # Project Structure
 
 ```text
-Rentertinment/
+BlueEye/
 ├── app/
 │   ├── admin/                 # Admin Dashboard
 │   │   ├── (dashboard)/

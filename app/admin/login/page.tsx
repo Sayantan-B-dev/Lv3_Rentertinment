@@ -45,7 +45,7 @@ function LoginForm() {
       >
         <h1 className="text-2xl font-semibold">Admin Login</h1>
         <p className="text-sm text-zinc-300">
-          Sign in to access the Rentertinment admin dashboard.
+          Sign in to access the BlueEye admin dashboard.
         </p>
 
         <div className="space-y-2">

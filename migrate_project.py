@@ -129,7 +129,7 @@ def create_basic_files():
             print(f"[EXISTS] {file_path}")
 
 def main():
-    print("\n=== RENTERTINMENT MIGRATION STARTED ===\n")
+    print("\n=== BlueEye MIGRATION STARTED ===\n")
 
     create_directories()
 

@@ -1,4 +1,4 @@
-# Rentertinment
+# BlueEye
 
 Modern artist discovery and booking platform built with Next.js 14.
 
