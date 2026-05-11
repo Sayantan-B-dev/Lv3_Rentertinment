@@ -1,6 +1,27 @@
 const brandName = process.env.NEXT_PUBLIC_BRAND_NAME || "BlueEye";
 
-export const siteConfig = {
+export interface SiteConfig {
+  name: string;
+  shortName: string;
+  description: string;
+  longDescription: string;
+  url: string;
+  ogImage: string;
+  author: string;
+  mainKeywords: string[];
+  links: {
+    twitter?: string;
+    instagram?: string;
+    facebook?: string;
+    youtube?: string;
+  };
+  twitterHandle?: string;
+  contactEmail?: string;
+  contactPhone?: string;
+  address?: string;
+}
+
+export const siteConfig: SiteConfig = {
   name: brandName,
   shortName: process.env.NEXT_PUBLIC_BRAND_SHORT_NAME || brandName,
   description: `Book India's Top Artists - Singers, DJs, Comedians & more for your events via ${brandName}. Premium entertainment at your fingertips.`,

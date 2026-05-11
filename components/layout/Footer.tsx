@@ -7,7 +7,6 @@ import { siteConfig } from "@/lib/config/site";
 export default function Footer() {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith("/admin");
-
   if (isAdmin) return null;
 
   return (
