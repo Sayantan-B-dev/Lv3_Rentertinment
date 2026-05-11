@@ -62,7 +62,7 @@ export default function Navbar() {
         <div className="hdr-inner">
           <Link href="/" className="logo" onClick={closeNav}>
             <div className="logo-icon">
-              <img src="/icon.png" alt="Rentertainment Logo" style={{ width: '100%', height: '100%', borderRadius: 'inherit' }} />
+              <img src="/icon.png" alt="BlueEye Logo" style={{ width: '100%', height: '100%', borderRadius: 'inherit' }} />
             </div>
             <div className="logo-text">
               {siteConfig.name}

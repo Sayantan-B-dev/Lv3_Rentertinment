@@ -1,4 +1,4 @@
-const brandName = process.env.NEXT_PUBLIC_BRAND_NAME || "Rentertainment";
+const brandName = process.env.NEXT_PUBLIC_BRAND_NAME;
 
 export const siteConfig = {
   name: brandName,
