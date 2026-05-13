@@ -84,15 +84,18 @@ export default function Navbar() {
             )}
 
             {session ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }} className="pc-only">
                 <Link href="/profile" className="btn-outline btn-xs">Profile</Link>
                 <button onClick={() => signOut()} className="btn-outline btn-xs" style={{ color: 'var(--crimson)' }}>Logout</button>
               </div>
             ) : (
-              <Link href="/login" className="btn-outline btn-xs">Login</Link>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }} className="pc-only">
+                <Link href="/login" className="btn-outline btn-xs">Login</Link>
+                <Link href="/login?view=register" className="btn-outline btn-xs">Register</Link>
+              </div>
             )}
 
-            <Link href="/contact" className="btn-primary btn-sm" style={{ padding: '0.75rem 1.6rem' }}>Book Artist ✦</Link>
+            <Link href="/contact" className="btn-primary btn-xs" style={{ padding: '0.5rem 1.25rem' }}>Book Artist ✦</Link>
             <button className="hamburger" onClick={toggleNav} aria-label="Menu">
               <span style={navOpen ? { transform: 'rotate(45deg) translate(5px, 5px)' } : {}}></span>
               <span style={navOpen ? { opacity: 0 } : {}}></span>
@@ -109,7 +112,22 @@ export default function Navbar() {
         <Link href="/#how" onClick={closeNav}>How It Works</Link>
         <Link href="/#testimonials" onClick={closeNav}>Reviews</Link>
         <Link href="/contact" onClick={closeNav}>Contact</Link>
-        <Link href="/contact" className="btn-primary btn-sm" style={{ borderRadius: '10px', justifyContent: 'center', marginTop: 'auto', padding:"5px" }} onClick={closeNav}>Book Artist ✦</Link>
+        {user?.role === "admin" && (
+          <Link href="/admin" onClick={closeNav} style={{ color: 'var(--gold)' }}>Admin Panel</Link>
+        )}
+        <hr style={{ border: 'none', borderTop: '1px solid rgba(255,255,255,0.1)', margin: '1rem 0' }} />
+        {session ? (
+          <>
+            <Link href="/profile" onClick={closeNav}>My Profile</Link>
+            <button onClick={() => { signOut(); closeNav(); }} style={{ background: 'none', border: 'none', color: 'var(--crimson)', textAlign: 'left', fontSize: '1.25rem', padding: '0.75rem 0', cursor: 'pointer' }}>Logout</button>
+          </>
+        ) : (
+          <>
+            <Link href="/login" onClick={closeNav}>Login</Link>
+            <Link href="/login?view=register" onClick={closeNav}>Register</Link>
+          </>
+        )}
+        <Link href="/contact" className="btn-primary btn-sm" style={{ borderRadius: '10px', justifyContent: 'center', marginTop: 'auto', padding: '0.75rem' }} onClick={closeNav}>Book Artist ✦</Link>
       </nav>
     </>
   );

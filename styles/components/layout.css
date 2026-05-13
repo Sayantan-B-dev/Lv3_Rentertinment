@@ -319,3 +319,21 @@ footer {
   padding: .75rem 0;
   border-bottom: 1px solid var(--border);
 }
+
+@media (max-width: 900px) {
+  header nav {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+  .pc-only {
+    display: none !important;
+  }
+}
+
+@media (min-width: 901px) {
+  .hamburger {
+    display: none;
+  }
+}

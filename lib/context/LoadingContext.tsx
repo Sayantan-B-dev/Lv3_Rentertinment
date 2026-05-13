@@ -28,28 +28,38 @@ export function LoadingProvider({ children }: { children: React.ReactNode }) {
 
   // Global click listener to catch navigations early
   useEffect(() => {
+    let timeout: NodeJS.Timeout;
+
     const handleGlobalClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      
-      // Handle links
       const anchor = target.closest("a");
+      
       if (anchor && 
           anchor.href && 
           anchor.href.startsWith(window.location.origin) && 
           !anchor.href.includes("#") &&
-          anchor.target !== "_blank") {
-        setIsLoading(true);
-      }
-
-      // Handle buttons (especially submit buttons)
-      const button = target.closest("button");
-      if (button && (button.type === "submit" || button.classList.contains("btn-primary"))) {
-        setIsLoading(true);
+          anchor.target !== "_blank" &&
+          !anchor.getAttribute("download")) {
+        
+        // Only trigger for real navigations, not same-page hashes
+        const currentPath = window.location.pathname;
+        const targetPath = new URL(anchor.href).pathname;
+        
+        if (currentPath !== targetPath) {
+          setIsLoading(true);
+          
+          // Safety timeout: reset loading if navigation takes too long or fails
+          clearTimeout(timeout);
+          timeout = setTimeout(() => setIsLoading(false), 8000);
+        }
       }
     };
 
     window.addEventListener("click", handleGlobalClick);
-    return () => window.removeEventListener("click", handleGlobalClick);
+    return () => {
+      window.removeEventListener("click", handleGlobalClick);
+      clearTimeout(timeout);
+    };
   }, []);
 
   return (

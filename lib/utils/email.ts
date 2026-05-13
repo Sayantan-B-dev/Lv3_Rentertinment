@@ -73,3 +73,28 @@ export async function sendVerificationEmail(email: string, code: string) {
     return { success: false, error: err };
   }
 }
+
+export async function sendResetPasswordEmail(email: string, otp: string) {
+  try {
+    const { data: resData, error } = await resend.emails.send({
+      from: "BlueEye <onboarding@resend.dev>",
+      to: [email],
+      subject: "Your Password Reset OTP",
+      html: `
+        <div style="font-family: sans-serif; text-align: center; padding: 2rem; background: #0a0807; color: #fff;">
+          <h2 style="color: #d4a017;">Reset Your Password</h2>
+          <p>We received a request to reset your password. Use the 6-digit OTP below to proceed. This code will expire in 15 minutes.</p>
+          <div style="font-size: 2.5rem; font-weight: bold; color: #d4a017; margin: 2rem 0; letter-spacing: 0.5rem; background: rgba(212,160,23,0.1); padding: 1rem; border-radius: 10px; border: 1px dashed #d4a017;">
+            ${otp}
+          </div>
+          <p style="color: #777; font-size: 0.8rem;">If you did not request this, please ignore this email.</p>
+        </div>
+      `,
+    });
+    if (error) throw error;
+    return { success: true, data: resData };
+  } catch (err) {
+    console.error("Reset password email fail:", err);
+    return { success: false, error: err };
+  }
+}

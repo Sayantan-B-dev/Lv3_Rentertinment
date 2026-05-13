@@ -10,6 +10,8 @@ const UserSchema = new mongoose.Schema({
   isVerified: { type: Boolean, default: false },
   verificationCode: { type: String },
   verificationCodeExpires: { type: Date },
+  resetPasswordToken: { type: String },
+  resetPasswordExpires: { type: Date },
   favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Artist" }]
 }, { timestamps: true });
 

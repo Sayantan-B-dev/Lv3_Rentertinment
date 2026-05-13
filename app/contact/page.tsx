@@ -2,16 +2,18 @@
 
 import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { useLoading } from "@/lib/context/LoadingContext";
 
 
 function ContactForm() {
   const searchParams = useSearchParams();
   const artistSlug = searchParams.get("artist") || "";
-
+  const { setIsLoading } = useLoading();
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     setStatus("loading");
     const fd = new FormData(e.currentTarget);
     const data = Object.fromEntries(fd);
@@ -37,6 +39,9 @@ function ContactForm() {
     } catch {
       setStatus("error");
       console.error("Network error occurred.");
+    } finally {
+      setIsLoading(false);
+      setStatus("idle");
     }
   };
 
