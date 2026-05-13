@@ -92,7 +92,7 @@ export default function Navbar() {
               <Link href="/login" className="btn-outline btn-xs">Login</Link>
             )}
 
-            <Link href="/contact" className="btn-primary btn-sm">Book Artist ✦</Link>
+            <Link href="/contact" className="btn-primary btn-sm" style={{ padding: '0.75rem 1.6rem' }}>Book Artist ✦</Link>
             <button className="hamburger" onClick={toggleNav} aria-label="Menu">
               <span style={navOpen ? { transform: 'rotate(45deg) translate(5px, 5px)' } : {}}></span>
               <span style={navOpen ? { opacity: 0 } : {}}></span>
@@ -109,7 +109,7 @@ export default function Navbar() {
         <Link href="/#how" onClick={closeNav}>How It Works</Link>
         <Link href="/#testimonials" onClick={closeNav}>Reviews</Link>
         <Link href="/contact" onClick={closeNav}>Contact</Link>
-        <Link href="/contact" className="btn-primary" style={{ borderRadius: '10px', justifyContent: 'center', marginTop: 'auto' }} onClick={closeNav}>Book Artist ✦</Link>
+        <Link href="/contact" className="btn-primary btn-sm" style={{ borderRadius: '10px', justifyContent: 'center', marginTop: 'auto', padding:"5px" }} onClick={closeNav}>Book Artist ✦</Link>
       </nav>
     </>
   );

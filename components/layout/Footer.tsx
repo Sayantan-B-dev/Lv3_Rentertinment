@@ -15,10 +15,9 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-brand">
             <Link href="/" className="logo" style={{ marginBottom: '.5rem', display: 'inline-flex' }}>
-              <div className="logo-icon">{(siteConfig.name || "B").charAt(0)}</div>
               <div className="logo-text">{siteConfig.name || "BlueEye"} <span>India's Artist Platform</span></div>
             </Link>
-            <p>India's premier platform to discover, book and manage artists — from Bollywood legends to emerging independent stars.</p>
+            <p>India's leading platform to discover and book world-class artists for every stage and occasion.</p>
             <div className="social-links">
               <a className="social-link" href="#" aria-label="Instagram">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>

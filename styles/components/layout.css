@@ -165,7 +165,38 @@ footer {
 @media (max-width: 768px) {
   .footer-grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 3rem;
+    text-align: center;
+  }
+  .footer-brand,
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer-col ul {
+    align-items: center;
+    padding: 0;
+  }
+  .footer-col a::before {
+    display: none;
+  }
+  .footer-col a:hover {
+    padding-left: 0;
+  }
+  .footer-brand p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .social-links,
+  .footer-bottom,
+  .footer-bottom-links {
+    justify-content: center;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-bottom: 2rem;
   }
 }
 .footer-brand p {
