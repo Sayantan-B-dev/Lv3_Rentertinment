@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+
 import { useLoading } from "@/lib/context/LoadingContext";
 
 interface ArtistFormProps {
@@ -76,11 +76,11 @@ export default function ArtistForm({ initialData, mode, artistId }: ArtistFormPr
           }
         }));
       } else {
-        toast.error(result.error || "Upload failed");
+        console.error(result.error || "Upload failed");
       }
     } catch (err) {
       console.error(err);
-      toast.error("Image upload failed. Please try again.");
+      console.error("Image upload failed. Please try again.");
     } finally {
       setUploading(false);
     }
@@ -108,17 +108,18 @@ export default function ArtistForm({ initialData, mode, artistId }: ArtistFormPr
 
       const result = await res.json();
       if (result.success) {
-        toast.success(mode === "edit" ? "Artist updated successfully!" : "Artist created successfully!");
+        // No toast, just proceed
+        console.log(mode === "edit" ? "Artist updated successfully!" : "Artist created successfully!");
         setTimeout(() => {
           router.push("/admin/artists");
           router.refresh();
         }, 800);
       } else {
-        toast.error(result.error || result.message || "Operation failed");
+        console.error(result.error || result.message || "Operation failed");
       }
     } catch (err) {
       console.error(err);
-      toast.error("Something went wrong. Please try again.");
+      console.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
       setIsLoading(false);

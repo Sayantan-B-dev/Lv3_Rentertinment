@@ -2,7 +2,7 @@
 
 import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { toast } from "sonner";
+
 
 function ContactForm() {
   const searchParams = useSearchParams();
@@ -28,15 +28,15 @@ function ContactForm() {
       const result = await res.json();
       if (res.ok) {
         setStatus("success");
-        toast.success("Inquiry submitted! Our team will contact you shortly.");
+        console.log("Inquiry submitted! Our team will contact you shortly.");
         (e.target as HTMLFormElement).reset();
       } else {
         setStatus("error");
-        toast.error(result.message || "Failed to submit inquiry.");
+        console.error(result.message || "Failed to submit inquiry.");
       }
     } catch {
       setStatus("error");
-      toast.error("Network error occurred.");
+      console.error("Network error occurred.");
     }
   };
 

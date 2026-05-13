@@ -10,10 +10,24 @@ export default function CustomCursor() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const updatePosition = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-      if (!isVisible) {
-        setIsVisible(true);
+    // Show cursor immediately if loading
+    if (isLoading && !isVisible) {
+      setIsVisible(true);
+      // Center it if we don't have a position yet
+      if (position.x === 0 && position.y === 0) {
+        setPosition({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+      }
+    }
+
+    const updatePosition = (x: number, y: number) => {
+      setPosition({ x, y });
+      if (!isVisible) setIsVisible(true);
+    };
+
+    const handleMouseMove = (e: MouseEvent) => updatePosition(e.clientX, e.clientY);
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches[0]) {
+        updatePosition(e.touches[0].clientX, e.touches[0].clientY);
       }
     };
 
@@ -33,14 +47,19 @@ export default function CustomCursor() {
       }
     };
 
-    window.addEventListener("mousemove", updatePosition);
+    window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseover", handleMouseOver);
+    window.addEventListener("touchstart", (e) => {
+      if (e.touches[0]) updatePosition(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
 
     return () => {
-      window.removeEventListener("mousemove", updatePosition);
+      window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseover", handleMouseOver);
+      window.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [isVisible]);
+  }, [isVisible, isLoading, position.x, position.y]);
 
   if (!isVisible) return null;
 

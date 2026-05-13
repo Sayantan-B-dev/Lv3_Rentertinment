@@ -247,16 +247,19 @@
 .scroll-hint {
   position: absolute;
   bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   color: var(--text3);
   font-size: 0.75rem;
   animation: bounce 2s ease infinite;
   z-index: 2;
+  pointer-events: none;
 }
 
 .scroll-hint svg {
@@ -304,7 +307,7 @@
 }
 
 /* ── SECTION SHARED ───────────────────────────────── */
-section:not([data-sonner-toaster]) {
+section {
   padding: clamp(4rem, 8vw, 7rem) clamp(1rem, 4vw, 2.5rem);
 }
 
